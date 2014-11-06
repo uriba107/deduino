@@ -20,7 +20,7 @@ Arduino Based DED for Falcon BMS
   * Resistors (220-330 ohm reesistors would be a good place to start)
 
 ### Software:
-1. Arduino IDE with u8glib library installed
+1. Arduino IDE
 1. Windows Vista and up with .net 4.5 installed (XP does not suppoer .net4.5 and I've not tested the supplied connector app with .net4.0)
 2. Falcon BMS 4.32+
 
