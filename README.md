@@ -1,5 +1,6 @@
 # DEDUino
-Arduino Based DED for Falcon BMS
+Arduino Based DED for Falcon BMS.
+Project Blog: http://pits.108vfs.org
 
 ## Requirements:
 ### Hardware:
