@@ -21,8 +21,8 @@
 // Select Arduino Type - Uncomment correct board type                //
 ///////////////////////////////////////////////////////////////////////
 
-//#define ARDUINO_UNO
-#define ARDUINO_MICRO
+#define ARDUINO_UNO
+//#define ARDUINO_MICRO
 //#define ARDUINO_DUE
 
 
