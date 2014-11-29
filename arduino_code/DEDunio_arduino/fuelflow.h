@@ -5,26 +5,12 @@ U8GLIB_SSD1306_128X64_2X ffDisp(FF_SEL, DISP_A0); // SSD1306 based FFI screen (a
 
 
 // Font settings
-#define Bezel
-// Original Settings
-#ifdef Bezel
+#define Bezel // works only when new font is used
   #define ffFont fuelflow_u8g
-  #define FF_CHAR_W 15
-  #define FF_CHAR_H 24
-  // Font offset - based on trial and error, not math
-#define FF_H_CONST 12
-#define FF_V_CONST 8
-#else
-  #define ffFont u8g_font_fub25n
-  #define FF_CHAR_W 19
-  #define FF_CHAR_H 27
-  // Font offset - based on trial and error, not math
-#define FF_H_CONST 1
-#define FF_V_CONST 5
-#endif
-
-
-
+  #define FF_CHAR_W 20
+  #define FF_CHAR_H 30
+  #define FF_H_CONST -3
+  #define FF_V_CONST 2
 
 // Global Variable required
 char FuelFlow[5];
@@ -42,9 +28,9 @@ void initFF() {
   ffDisp.firstPage();
   do {
     #ifdef Bezel
-      ffDisp.drawStr(short((FF_CHAR_W * 0.5)) + FF_H_CONST, short(FF_CHAR_H * 0) + FF_V_CONST,"FUEL");
-      ffDisp.drawStr((FF_CHAR_W * 4) + FF_H_CONST, short(FF_CHAR_H * 0) + FF_V_CONST,"FLOW");
-      ffDisp.drawStr(short((FF_CHAR_W * 2.85)) + FF_H_CONST, short(FF_CHAR_H * 2)+ FF_V_CONST,"PPH");
+      ffDisp.drawStr(short((FF_CHAR_W * 1)) + FF_H_CONST, short(FF_CHAR_H * 0),"FUEL");
+      ffDisp.drawStr((FF_CHAR_W * 4) + FF_H_CONST, short(FF_CHAR_H * 0),"FLOW");
+      ffDisp.drawStr(short((FF_CHAR_W * 3)) + FF_H_CONST, 50,"PPH");
     #else
       ffDisp.drawStr((FF_CHAR_W * 1) + FF_H_CONST, short(FF_CHAR_H * 1) + FF_V_CONST, "99999");
     #endif
@@ -109,13 +95,13 @@ void drawFF() {
     ffDisp.drawStr((FF_CHAR_W * 4) + FF_H_CONST, short(FF_CHAR_H * 1) + FF_V_CONST, "00");
     
     #ifdef Bezel
-      ffDisp.drawStr(short((FF_CHAR_W * 0.5)) + FF_H_CONST, short(FF_CHAR_H * 0) + FF_V_CONST,"FUEL");
-      ffDisp.drawStr((FF_CHAR_W * 4) + FF_H_CONST, short(FF_CHAR_H * 0) + FF_V_CONST,"FLOW");
+      ffDisp.drawStr(short((FF_CHAR_W * 1)) + FF_H_CONST, short(FF_CHAR_H * 0),"FUEL");
+      ffDisp.drawStr((FF_CHAR_W * 4) + FF_H_CONST, short(FF_CHAR_H * 0),"FLOW");
       ffDisp.setColorIndex(0);
-      ffDisp.drawBox((FF_CHAR_W * 3) + FF_H_CONST, 0, (FF_CHAR_W), short(FF_CHAR_H*0.3));
-      ffDisp.drawBox((FF_CHAR_W * 2) + FF_H_CONST, short(FF_CHAR_H * 1.75)+ FF_V_CONST, (FF_CHAR_W * 3), short(FF_CHAR_H*2));
+      ffDisp.drawBox((FF_CHAR_W * 3) + FF_H_CONST, 0, (FF_CHAR_W), short(FF_CHAR_H*0.2));
+      ffDisp.drawBox((FF_CHAR_W * 2) + FF_H_CONST, 54, (FF_CHAR_W * 3), short(FF_CHAR_H*0.5));
       ffDisp.setColorIndex(1);
-      ffDisp.drawStr(short((FF_CHAR_W * 2.85)) + FF_H_CONST, short(FF_CHAR_H * 2)+ FF_V_CONST,"PPH");
+      ffDisp.drawStr(short((FF_CHAR_W * 3)) + FF_H_CONST, 50,"PPH");
     #endif
   } while ( ffDisp.nextPage() );
   /// End Picture loop ///

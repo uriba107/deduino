@@ -1,8 +1,8 @@
 //*******************************************************************//
 //  Name    : DEDuino, Arduino displays for FalconBMS                //
 //  Author  : Uri Ben-Avraham                                        //
-//  Date    : 1 Nov, 2014                                            //
-//  Version : 1.0                                                    //
+//  Date    : 4 Dec, 2014                                            //
+//  Version : 1.1.1                                                  //
 //  License : MIT                                                    //
 //  Notes   : Uncomment the DEFINE for the Arduino board in use      //
 //          : Boards supported by this version:                      //
@@ -21,8 +21,8 @@
 // Select Arduino Type - Uncomment correct board type                //
 ///////////////////////////////////////////////////////////////////////
 
-//#define ARDUINO_UNO
-#define ARDUINO_MICRO
+#define ARDUINO_UNO
+//#define ARDUINO_MICRO
 //#define ARDUINO_DUE
 
 
@@ -86,8 +86,6 @@
 // Please note that too many featuers will casue a reduced FPS due to the increased traffic required.
 //#define EXTRAS
 
-
-
 ///////////////////
 //// Includes ////
 //////////////////
@@ -115,7 +113,6 @@
   #include "falconded_full_u8g.h"
   #include "falconded_wide_u8g.h"
   #include "fuelflow_u8g.h"
-
 
   #ifdef DED_on
     #include "ded.h"

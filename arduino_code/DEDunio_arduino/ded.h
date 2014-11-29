@@ -8,7 +8,7 @@ U8GLIB_NHD31OLED_2X_BW dedDisp(DED_SEL, DISP_A0); //DED screen SSD1322 based 240
   #define dedFont FalconDED_wide
   #define DED_CHAR_W 10
   #define DED_CHAR_H 12
-  #define DED_H_CONST 0
+  #define DED_H_CONST 8
   #define DED_V_CONST 2
 #else
   #define dedFont FalconDED_full
@@ -59,5 +59,3 @@ void drawDED() {
   } while ( dedDisp.nextPage() );
   /// End Picture loop ///
 }
-
-
