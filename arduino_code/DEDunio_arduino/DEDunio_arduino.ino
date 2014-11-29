@@ -21,8 +21,8 @@
 // Select Arduino Type - Uncomment correct board type                //
 ///////////////////////////////////////////////////////////////////////
 
-#define ARDUINO_UNO
-//#define ARDUINO_MICRO
+//#define ARDUINO_UNO
+#define ARDUINO_MICRO
 //#define ARDUINO_DUE
 
 
@@ -113,6 +113,9 @@
   
   #include "U8glib.h"
   #include "falconded_full_u8g.h"
+  #include "falconded_wide_u8g.h"
+  #include "fuelflow_u8g.h"
+
 
   #ifdef DED_on
     #include "ded.h"

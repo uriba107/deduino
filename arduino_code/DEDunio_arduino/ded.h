@@ -3,15 +3,23 @@
 U8GLIB_NHD31OLED_2X_BW dedDisp(DED_SEL, DISP_A0); //DED screen SSD1322 based 240*64 (Buydisplay/rising star)
 
 // Font settings
-#define dedFont FalconDED_full
-#define DED_CHAR_W 9
-#define DED_CHAR_H 12
+#define Widefont
+#ifdef Widefont
+  #define dedFont FalconDED_wide
+  #define DED_CHAR_W 10
+  #define DED_CHAR_H 12
+  #define DED_H_CONST 0
+  #define DED_V_CONST 2
+#else
+  #define dedFont FalconDED_full
+  #define DED_CHAR_W 9
+  #define DED_CHAR_H 12
 // Font offset calc
 // width: Screen is 256px wide. font is 9px wide. DED has 24 chars. 24*9=216 (Total text width). 256-216=40 diff. 40/2 = 20 offset in px to center text in screen
 // Height: (64-(12*5))/2=2
-#define DED_H_CONST 20
-#define DED_V_CONST 2
-
+  #define DED_H_CONST 20
+  #define DED_V_CONST 2
+#endif
 
 // Global Variable required
 char DED[5][26] = {{ 0 }};

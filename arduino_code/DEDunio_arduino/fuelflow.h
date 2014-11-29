@@ -5,12 +5,26 @@ U8GLIB_SSD1306_128X64_2X ffDisp(FF_SEL, DISP_A0); // SSD1306 based FFI screen (a
 
 
 // Font settings
-#define ffFont u8g_font_fub25n
-#define FF_CHAR_W 19
-#define FF_CHAR_H 27
-// Font offset - based on trial and error, not math
+#define Bezel
+// Original Settings
+#ifdef Bezel
+  #define ffFont fuelflow_u8g
+  #define FF_CHAR_W 15
+  #define FF_CHAR_H 24
+  // Font offset - based on trial and error, not math
+#define FF_H_CONST 12
+#define FF_V_CONST 8
+#else
+  #define ffFont u8g_font_fub25n
+  #define FF_CHAR_W 19
+  #define FF_CHAR_H 27
+  // Font offset - based on trial and error, not math
 #define FF_H_CONST 1
 #define FF_V_CONST 5
+#endif
+
+
+
 
 // Global Variable required
 char FuelFlow[5];
@@ -27,7 +41,13 @@ void initFF() {
   /// Begin Picture loop ///
   ffDisp.firstPage();
   do {
-    ffDisp.drawStr((FF_CHAR_W * 1) + FF_H_CONST, short(FF_CHAR_H * 1) + FF_V_CONST, "99999");
+    #ifdef Bezel
+      ffDisp.drawStr(short((FF_CHAR_W * 0.5)) + FF_H_CONST, short(FF_CHAR_H * 0) + FF_V_CONST,"FUEL");
+      ffDisp.drawStr((FF_CHAR_W * 4) + FF_H_CONST, short(FF_CHAR_H * 0) + FF_V_CONST,"FLOW");
+      ffDisp.drawStr(short((FF_CHAR_W * 2.85)) + FF_H_CONST, short(FF_CHAR_H * 2)+ FF_V_CONST,"PPH");
+    #else
+      ffDisp.drawStr((FF_CHAR_W * 1) + FF_H_CONST, short(FF_CHAR_H * 1) + FF_V_CONST, "99999");
+    #endif
   } while ( ffDisp.nextPage() );
   /// End Picture loop ///
 }
@@ -87,6 +107,16 @@ void drawFF() {
     ffDisp.print(FFhPriv);
 
     ffDisp.drawStr((FF_CHAR_W * 4) + FF_H_CONST, short(FF_CHAR_H * 1) + FF_V_CONST, "00");
+    
+    #ifdef Bezel
+      ffDisp.drawStr(short((FF_CHAR_W * 0.5)) + FF_H_CONST, short(FF_CHAR_H * 0) + FF_V_CONST,"FUEL");
+      ffDisp.drawStr((FF_CHAR_W * 4) + FF_H_CONST, short(FF_CHAR_H * 0) + FF_V_CONST,"FLOW");
+      ffDisp.setColorIndex(0);
+      ffDisp.drawBox((FF_CHAR_W * 3) + FF_H_CONST, 0, (FF_CHAR_W), short(FF_CHAR_H*0.3));
+      ffDisp.drawBox((FF_CHAR_W * 2) + FF_H_CONST, short(FF_CHAR_H * 1.75)+ FF_V_CONST, (FF_CHAR_W * 3), short(FF_CHAR_H*2));
+      ffDisp.setColorIndex(1);
+      ffDisp.drawStr(short((FF_CHAR_W * 2.85)) + FF_H_CONST, short(FF_CHAR_H * 2)+ FF_V_CONST,"PPH");
+    #endif
   } while ( ffDisp.nextPage() );
   /// End Picture loop ///
 }
