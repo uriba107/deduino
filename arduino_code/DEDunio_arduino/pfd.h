@@ -1,6 +1,9 @@
 // Declare screen Object
 U8GLIB_NHD31OLED_2X_BW pfdDisp(PFD_SEL, DISP_A0); //PFD screen SSD1322 based 240*64 (Buydisplay/rising star)
 
+// Define crosshair for debugging
+//#define crosshair
+
 // Font settings
 #define Widefont
 #ifdef Widefont
@@ -41,6 +44,11 @@ void initPFD() {
     pfdDisp.firstPage();
   do {
     pfdDisp.drawStr(PFD_H_CONST, 2 * PFD_CHAR_H + PFD_V_CONST, "PFD - READY!");
+    #ifdef crosshair
+      pfdDisp.drawFrame(0,0,256,64);
+      pfdDisp.drawLine(128,0,128,64);
+      pfdDisp.drawLine(0,32,256,32);
+    #endif
   } while ( pfdDisp.nextPage() );
 }
 

@@ -1,5 +1,5 @@
 // Declare screen Object
-U8GLIB_SSD1306_128X64_2X ffDisp(FF_SEL, DISP_A0); // SSD1306 based FFI screen (adafruit)
+U8GLIB_SSD1306_128X64_2X ffDisp(FF_SEL, DISP_A0); // SSD1306 based FFI screen (adafruit/Ebay)
 //U8GLIB_SH1106_128X64_2X ffDisp(FF_SEL, DISP_A0); // SH1106 based FFI screen (ebay) - thanks "MrWell"!
 
 // Change these display sizes if needed
@@ -8,7 +8,7 @@ U8GLIB_SSD1306_128X64_2X ffDisp(FF_SEL, DISP_A0); // SSD1306 based FFI screen (a
 
 // Define bezel to draw FUEL FLOW and PPH on screen. (Bezel reduces FPS considerably) - if you build a real Bezel, this option should be off
 #define Bezel
-// Define RealFFI to draw "Real" FFI - when not defined a BMS style FFI is drawn (Real FFI has lover FPS
+// Define RealFFI to draw "Real" FFI - when not defined a BMS style FFI is drawn (Real FFI has lower FPS)
 #define RealFFI
 
 // For aligning purposes and debugging, enable
@@ -110,15 +110,6 @@ const unsigned short FF_POS_Y = SCREEN_H_MID + FF_V_CONST;
 ///////////////////
 #ifdef Bezel
 
-#ifdef RealFFI
-  
-//void ExtendBezel() {
-//  ffDisp.setColorIndex(0);
-//  ffDisp.drawBox(0,FF_POS_Y - (FF_CHAR_H/2),((FF_CHAR_W * 2) + 2),FF_CHAR_H); //top box
-//  ffDisp.drawBox(0,FF_POS_Y + (FF_CHAR_H/2),((FF_CHAR_W * 2) + 2 ),FF_CHAR_H); //Bottom box
-//  ffDisp.setColorIndex(1);
-//}
-#endif
 // Function drawBezel
 // My intention is to create re-usable code. Why code something twice (having to change it twice if in error), when one can fix it with a function?
 void drawBezel() {
@@ -126,6 +117,7 @@ void drawBezel() {
   ffDisp.setColorIndex(0);
   ffDisp.drawBox(WIPE_BOX_X, WIPE_BOX_Y, WIPE_BOX_W, WIPE_BOX_H ); // Clear the area below the "PPH" so the hundreds digits dont show there
  #ifdef RealFFI
+// Wipe the higher digits roll
   ffDisp.drawBox(FF_WIPE_X,FF_WIPE_TOP_Y,FF_WIPE_BOX_W ,FF_WIPE_BOX_H); //top box
   ffDisp.drawBox(FF_WIPE_X,FF_WIPE_BOTTOM_Y,FF_WIPE_BOX_W ,FF_WIPE_BOX_H); //Bottom box
   #endif
@@ -199,11 +191,11 @@ void drawFF() {
   char FFt = FuelFlow[1];
 
 #ifdef RealFFI
-byte RollOver; // to save memory, we will be using a single byte with bit flags
+  byte RollOver; // to save memory, we will be using a single byte with bit flags
   #define FFtRollOver (RollOver & 0x01) // FFt is about to roll over
   #define FFttRollOver (RollOver & 0x02) // FFtt is about to roll over
 
-    // FFt  
+// FFt  
   char FFtNext;  
   char FFtPriv;
 
@@ -219,19 +211,24 @@ byte RollOver; // to save memory, we will be using a single byte with bit flags
       FFtNext = FFt + 1;
     }
 
-    //FFtt  
+//FFtt  
   char FFttNext;
   char FFttPriv;
-    if (FFtt == 48) {
-      FFttPriv = 57;
-    } else {
-      FFttPriv = FFtt - 1;
-    }
-    if (FFtt == 57) { //
-      FFttNext = 48;  
-    } else {
-      FFttNext = FFtt + 1;
-    }    
+
+  if (FFtt == 56) { //
+    FFttNext = 47;  
+  } else {
+    FFttNext = FFtt + 1;
+  }    
+  if (FFtt == 48) {
+    FFttPriv = 47;
+    FFtt = 47;
+  } else if (FFtt == 49) {
+    FFttPriv = 47; 
+  } else {
+    FFttPriv = FFtt - 1;
+  }
+
 
   if (FFh == 57) { //If FFh is ASCII 9 we are at roll over (up or down doesn't matter)
       RollOver |= 0x01; //if FFh is 9 I'm going up
