@@ -15,15 +15,15 @@
 //*******************************************************************//
 
 #include <Arduino.h>
-#include <SPI.h>
+#include "config.h"
+//*******************************************************************//
+//  All configuration options are set via the "conf.h" file          //
+//  Please DO NOT edit code below this segment                       //
+//  (Unless you know what you are doing - in which case.. have fun!) //
+//*******************************************************************//
 
-///////////////////////////////////////////////////////////////////////
-// Select Arduino Type - Uncomment correct board type                //
-///////////////////////////////////////////////////////////////////////
 
-#define ARDUINO_UNO
-//#define ARDUINO_MICRO
-//#define ARDUINO_DUE
+///*************** DO NOT EDIT BELOW THIS LINE WITHOUT INTENT! ***************//
 
 
 #ifdef ARDUINO_UNO
@@ -62,29 +62,6 @@
 ///////////////////////////////////////////////////////////////////////
 #endif
 
-
-///////////////////////////////////////////////////////////////////////
-// Module Defines                                                    //
-// Uncomment The modules you want                                    //
-///////////////////////////////////////////////////////////////////////
-// Screens
-#define Screens //global enable screens
-#ifdef Screens
-  #define DED_on
-  #define FuelFlow_on
-//  #define PFD_on // require "EXTRA" to be enabled
-#endif
-
-// Lightes
-//#define Lights //global enable lights
-#ifdef Lights
-  #define Indexers_on
-//  #define CautionPanel_on // require "EXTRA" to be enabled
-#endif
-
-// Uncomment for extra features (Caution panel and PFD)
-// Please note that too many featuers will casue a reduced FPS due to the increased traffic required.
-//#define EXTRAS
 
 ///////////////////
 //// Includes ////
@@ -130,6 +107,7 @@
 // LightPanels general config
 // Light General
 #ifdef Lights
+    #include <SPI.h>
     #define AoaLatchPin 2 // AOA indexed
     #define CpLatchPin 3 // Caution Panels
   
@@ -149,6 +127,7 @@ short Run = 0;
 /////// Main Program /////////////
 void setup() {
  // Init SPI
+#ifdef Lights
 #ifdef ARDUINO_UNO
   pinMode(SS,OUTPUT);
   digitalWrite(SS,HIGH);
@@ -156,6 +135,7 @@ void setup() {
     SPI.begin();
     SPI.setBitOrder(LSBFIRST);
     SPI.setClockDivider(SPI_CLOCK_DIV2);
+#endif
 
   delay(1000); // to allow screen to boot on power on
 
@@ -206,9 +186,7 @@ void loop() {
     lightAOA();
   #endif
   
-  // Non refresh critical function, run those every three loops.
-
-#ifdef EXTRAS
+  // Non refresh critical function, run those alternating every loop.
 switch (Run) {
     case 0:
       #ifdef PFD_on
@@ -228,5 +206,4 @@ switch (Run) {
         Run = 0;
       break;
   }
-#endif
 }

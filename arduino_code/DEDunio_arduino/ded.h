@@ -2,11 +2,7 @@
 // Declare screen Object
 U8GLIB_NHD31OLED_2X_BW dedDisp(DED_SEL, DISP_A0); //DED screen SSD1322 based 240*64 (Buydisplay/rising star)
 
-// Define crosshair for debugging
-//#define crosshair
-
 // Font settings
-#define Widefont
 #ifdef Widefont
   #define dedFont FalconDED_wide
   #define DED_CHAR_W 10
@@ -41,6 +37,8 @@ void initDED() {
   dedDisp.firstPage();
   do {
     dedDisp.drawStr(DED_H_CONST, 2 * DED_CHAR_H + DED_V_CONST, "DED - READY!");
+    
+// Below crosshair is for alignment purposes. Defined at config.h
     #ifdef crosshair
       dedDisp.drawFrame(0,0,256,64);
       dedDisp.drawLine(128,0,128,64);

@@ -1,18 +1,14 @@
 // Declare screen Object
-U8GLIB_SSD1306_128X64_2X ffDisp(FF_SEL, DISP_A0); // SSD1306 based FFI screen (adafruit/Ebay)
-//U8GLIB_SH1106_128X64_2X ffDisp(FF_SEL, DISP_A0); // SH1106 based FFI screen (ebay) - thanks "MrWell"!
+#ifdef FFI_SSD1306
+  U8GLIB_SSD1306_128X64_2X ffDisp(FF_SEL, DISP_A0); // SSD1306 based FFI screen (adafruit/Ebay)
+#endif
+#ifdef FFI_SH1106
+  U8GLIB_SH1106_128X64_2X ffDisp(FF_SEL, DISP_A0); // SH1106 based FFI screen (ebay) - thanks "MrWell"!
+#endif
 
 // Change these display sizes if needed
 #define SCREEN_W 128
 #define SCREEN_H 64
-
-// Define bezel to draw FUEL FLOW and PPH on screen. (Bezel reduces FPS considerably) - if you build a real Bezel, this option should be off
-#define Bezel
-// Define RealFFI to draw "Real" FFI - when not defined a BMS style FFI is drawn (Real FFI has lower FPS)
-#define RealFFI
-
-// For aligning purposes and debugging, enable
-//#define crosshair
 
 // FONT DEFINITIONS - Main fuel flow indicator digits
 // - Define font
@@ -104,7 +100,6 @@ const unsigned short FF_POS_Y = SCREEN_H_MID + FF_V_CONST;
 #endif
 
 
-
 ////////////////////
 //// Functions ////
 ///////////////////
@@ -145,7 +140,7 @@ void initFF() {
     // I've centered this in the same fashion as the "PPH"
     ffDisp.drawStr(FF_POS_X_1, FF_POS_Y, "99999");
     
-    // Below crosshair is for alignment purposes. Defined at the top
+    // Below crosshair is for alignment purposes. Defined at config.h
     #ifdef crosshair
       ffDisp.drawFrame(0,0,128,64);
       ffDisp.drawLine(64,0,64,64);
