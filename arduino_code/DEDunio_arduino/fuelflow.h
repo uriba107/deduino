@@ -7,8 +7,8 @@
 #endif
 
 // Change these display sizes if needed
-#define SCREEN_W 128
-#define SCREEN_H 64
+#define FFI_SCREEN_W 128
+#define FFI_SCREEN_H 64
 
 // FONT DEFINITIONS - Main fuel flow indicator digits
 // - Define font
@@ -58,34 +58,34 @@ char FuelFlow[5];
 // 
 
 // Center of the used screen, based on screen size constants defined earlier
-const unsigned short SCREEN_W_MID = SCREEN_W / 2;
-const unsigned short SCREEN_H_MID = SCREEN_H / 2;
+const unsigned short FFI_SCREEN_W_MID = FFI_SCREEN_W / 2;
+const unsigned short FFI_SCREEN_H_MID = FFI_SCREEN_H / 2;
 
 // Fuel flow number, X position for first two digits
-const unsigned short FF_POS_X_1 = int(SCREEN_W_MID - ((FF_CHAR_W * 7) / 2)) + ((FF_CHAR_W + 1) * 1) + FF_H_CONST;
+const unsigned short FF_POS_X_1 = int(FFI_SCREEN_W_MID - ((FF_CHAR_W * 7) / 2)) + ((FF_CHAR_W + 1) * 1) + FF_H_CONST;
 // Fuel flow number, X position for first two digits
-const unsigned short FF_POS_X_2 = int(SCREEN_W_MID - ((FF_CHAR_W * 7) / 2)) + ((FF_CHAR_W + 1) * 2) + FF_H_CONST;
+const unsigned short FF_POS_X_2 = int(FFI_SCREEN_W_MID - ((FF_CHAR_W * 7) / 2)) + ((FF_CHAR_W + 1) * 2) + FF_H_CONST;
 // Fuel flow number, X postion for third digit
-const unsigned short FF_POS_X_3 = int(SCREEN_W_MID - ((FF_CHAR_W * 7) / 2)) + ((FF_CHAR_W + 1) * 3) + FF_H_CONST;
+const unsigned short FF_POS_X_3 = int(FFI_SCREEN_W_MID - ((FF_CHAR_W * 7) / 2)) + ((FF_CHAR_W + 1) * 3) + FF_H_CONST;
 // Fuel flow number, X position for fourth and fifth digit
-const unsigned short FF_POS_X_4 = int(SCREEN_W_MID - ((FF_CHAR_W * 7) / 2)) + ((FF_CHAR_W + 1) * 4) + FF_H_CONST;
+const unsigned short FF_POS_X_4 = int(FFI_SCREEN_W_MID - ((FF_CHAR_W * 7) / 2)) + ((FF_CHAR_W + 1) * 4) + FF_H_CONST;
 // Fuel flow number, X position for fourth and fifth digit
-const unsigned short FF_POS_X_5 = int(SCREEN_W_MID - ((FF_CHAR_W * 7) / 2)) + ((FF_CHAR_W + 1) * 5) + FF_H_CONST;
+const unsigned short FF_POS_X_5 = int(FFI_SCREEN_W_MID - ((FF_CHAR_W * 7) / 2)) + ((FF_CHAR_W + 1) * 5) + FF_H_CONST;
 // Fuel flow number, Y position (base)
-const unsigned short FF_POS_Y = SCREEN_H_MID + FF_V_CONST;
+const unsigned short FF_POS_Y = FFI_SCREEN_H_MID + FF_V_CONST;
 
 #ifdef Bezel
   // FUEL-position X and Y not needed, these are constants already. No need to spend more memory on putting them in new variables
 
   // FLOW-position X. Y-position already is a constant, so no need to re-calculate 
-  const unsigned short FLOW_POS_X = SCREEN_W - BEZEL_FF_H_CONST - uint8_t(BEZEL_FF_CHAR_W * 4);
+  const unsigned short FLOW_POS_X = FFI_SCREEN_W - BEZEL_FF_H_CONST - uint8_t(BEZEL_FF_CHAR_W * 4);
 
   // PPH-position X and Y
-  const unsigned short PPH_POS_X = uint8_t(SCREEN_W_MID - ((BEZEL_PPH_CHAR_W * 3) / 2)) + BEZEL_PPH_H_CONST +1;
-  const unsigned short PPH_POS_Y = SCREEN_H - BEZEL_PPH_V_CONST - 11;
+  const unsigned short PPH_POS_X = uint8_t(FFI_SCREEN_W_MID - ((BEZEL_PPH_CHAR_W * 3) / 2)) + BEZEL_PPH_H_CONST +1;
+  const unsigned short PPH_POS_Y = FFI_SCREEN_H - BEZEL_PPH_V_CONST - 11;
   
     // X,Y, Width and height of the PPH wiper box
-  const unsigned short WIPE_BOX_X = SCREEN_W_MID - uint8_t((BEZEL_PPH_CHAR_W * 3) / 2);
+  const unsigned short WIPE_BOX_X = FFI_SCREEN_W_MID - uint8_t((BEZEL_PPH_CHAR_W * 3) / 2);
   const unsigned short WIPE_BOX_Y = PPH_POS_Y - 1;
   const unsigned short WIPE_BOX_W = uint8_t((BEZEL_PPH_CHAR_W + 1) * 3);
   const unsigned short WIPE_BOX_H = BEZEL_PPH_CHAR_H + 2;
@@ -186,9 +186,9 @@ void drawFF() {
   char FFt = FuelFlow[1];
 
 #ifdef RealFFI
-  byte RollOver; // to save memory, we will be using a single byte with bit flags
-  #define FFtRollOver (RollOver & 0x01) // FFt is about to roll over
-  #define FFttRollOver (RollOver & 0x02) // FFtt is about to roll over
+  byte RollOverFlags = 0; // to save memory, we will be using a single byte with bit flags
+  #define FFtRollOver (RollOverFlags & 0x01) // FFt is about to roll over
+  #define FFttRollOver (RollOverFlags & 0x02) // FFtt is about to roll over
 
 // FFt  
   char FFtNext;  
@@ -226,10 +226,10 @@ void drawFF() {
 
 
   if (FFh == 57) { //If FFh is ASCII 9 we are at roll over (up or down doesn't matter)
-      RollOver |= 0x01; //if FFh is 9 I'm going up
+      RollOverFlags |= 0x01; //if FFh is 9 I'm going up
     // find above and below values 
     if (FFt == 57) { // if FFt is 9 and rolling over the FFt is rolling over
-      RollOver |= 0x02;
+      RollOverFlags |= 0x02;
     }
     
   }
@@ -243,59 +243,59 @@ void drawFF() {
     #ifdef RealFFI
     // Draw FFtt
     if (FFttRollOver) { // if rolling over - Animate
-      ffDisp.setPrintPos(FF_POS_X_1, SCREEN_H_MID + short(((FF_CHAR_H + 1) * -1)) + offset + FF_V_CONST);
+      ffDisp.setPrintPos(FF_POS_X_1, FFI_SCREEN_H_MID + short(((FF_CHAR_H + 1) * -1)) + offset + FF_V_CONST);
       ffDisp.print(FFttNext);
-      ffDisp.setPrintPos(FF_POS_X_1, SCREEN_H_MID + short(((FF_CHAR_H + 1) * 0)) + offset + FF_V_CONST);
+      ffDisp.setPrintPos(FF_POS_X_1, FFI_SCREEN_H_MID + short(((FF_CHAR_H + 1) * 0)) + offset + FF_V_CONST);
       ffDisp.print(FFtt);
-      ffDisp.setPrintPos(FF_POS_X_1, SCREEN_H_MID + short(((FF_CHAR_H + 1) * 1)) + offset + FF_V_CONST);
+      ffDisp.setPrintPos(FF_POS_X_1, FFI_SCREEN_H_MID + short(((FF_CHAR_H + 1) * 1)) + offset + FF_V_CONST);
       ffDisp.print(FFttPriv);
     } else { // just print
-      ffDisp.setPrintPos(FF_POS_X_1, SCREEN_H_MID + short(((FF_CHAR_H + 1) * -1)) + FF_V_CONST);
+      ffDisp.setPrintPos(FF_POS_X_1, FFI_SCREEN_H_MID + short(((FF_CHAR_H + 1) * -1)) + FF_V_CONST);
       ffDisp.print(FFttNext);
-      ffDisp.setPrintPos(FF_POS_X_1, SCREEN_H_MID + short(((FF_CHAR_H + 1) * 0)) + FF_V_CONST);
+      ffDisp.setPrintPos(FF_POS_X_1, FFI_SCREEN_H_MID + short(((FF_CHAR_H + 1) * 0)) + FF_V_CONST);
       ffDisp.print(FFtt);
-      ffDisp.setPrintPos(FF_POS_X_1, SCREEN_H_MID + short(((FF_CHAR_H + 1) * 1)) + FF_V_CONST);
+      ffDisp.setPrintPos(FF_POS_X_1, FFI_SCREEN_H_MID + short(((FF_CHAR_H + 1) * 1)) + FF_V_CONST);
       ffDisp.print(FFttPriv);
     }
     // Draw FFt
     if (FFtRollOver) { //FFtRollOver rollOver is true then something is about to change - draw both up and down
-      ffDisp.setPrintPos(FF_POS_X_2, SCREEN_H_MID + short(((FF_CHAR_H + 1) * -1)) + offset + FF_V_CONST);
+      ffDisp.setPrintPos(FF_POS_X_2, FFI_SCREEN_H_MID + short(((FF_CHAR_H + 1) * -1)) + offset + FF_V_CONST);
       ffDisp.print(FFtNext);
-      ffDisp.setPrintPos(FF_POS_X_2, SCREEN_H_MID + short(((FF_CHAR_H + 1) * 0)) + offset + FF_V_CONST);
+      ffDisp.setPrintPos(FF_POS_X_2, FFI_SCREEN_H_MID + short(((FF_CHAR_H + 1) * 0)) + offset + FF_V_CONST);
       ffDisp.print(FFt);
-      ffDisp.setPrintPos(FF_POS_X_2, SCREEN_H_MID + short(((FF_CHAR_H + 1) * 1)) + offset + FF_V_CONST);
+      ffDisp.setPrintPos(FF_POS_X_2, FFI_SCREEN_H_MID + short(((FF_CHAR_H + 1) * 1)) + offset + FF_V_CONST);
       ffDisp.print(FFtPriv); 
     } else { //FFtRollOver is false - draw normal digits
-      ffDisp.setPrintPos(FF_POS_X_2, SCREEN_H_MID + short(((FF_CHAR_H + 1) * -1)) + FF_V_CONST);
+      ffDisp.setPrintPos(FF_POS_X_2, FFI_SCREEN_H_MID + short(((FF_CHAR_H + 1) * -1)) + FF_V_CONST);
       ffDisp.print(FFtNext);
-      ffDisp.setPrintPos(FF_POS_X_2, SCREEN_H_MID + short(((FF_CHAR_H + 1) * 0)) + FF_V_CONST);
+      ffDisp.setPrintPos(FF_POS_X_2, FFI_SCREEN_H_MID + short(((FF_CHAR_H + 1) * 0)) + FF_V_CONST);
       ffDisp.print(FFt);
-      ffDisp.setPrintPos(FF_POS_X_2, SCREEN_H_MID + short(((FF_CHAR_H + 1) * 1)) + FF_V_CONST);
+      ffDisp.setPrintPos(FF_POS_X_2, FFI_SCREEN_H_MID + short(((FF_CHAR_H + 1) * 1)) + FF_V_CONST);
       ffDisp.print(FFtPriv); 
     }
     #else
     // Draw normal FFtt and FFt
-      ffDisp.setPrintPos(FF_POS_X_1, SCREEN_H_MID + FF_V_CONST);
+      ffDisp.setPrintPos(FF_POS_X_1, FFI_SCREEN_H_MID + FF_V_CONST);
       ffDisp.print(FFtt); // First two digits
-      ffDisp.setPrintPos(FF_POS_X_2, SCREEN_H_MID + FF_V_CONST);
+      ffDisp.setPrintPos(FF_POS_X_2, FFI_SCREEN_H_MID + FF_V_CONST);
       ffDisp.print(FFt); // First two digits
     #endif
     
     // print the FFh animation
-    ffDisp.setPrintPos(FF_POS_X_3, SCREEN_H_MID + short(((FF_CHAR_H + 1) * -2)) + offset + FF_V_CONST);
+    ffDisp.setPrintPos(FF_POS_X_3, FFI_SCREEN_H_MID + short(((FF_CHAR_H + 1) * -2)) + offset + FF_V_CONST);
     ffDisp.print(FFhTwoOver);
-    ffDisp.setPrintPos(FF_POS_X_3, SCREEN_H_MID + short(((FF_CHAR_H + 1) * -1)) + offset + FF_V_CONST);
+    ffDisp.setPrintPos(FF_POS_X_3, FFI_SCREEN_H_MID + short(((FF_CHAR_H + 1) * -1)) + offset + FF_V_CONST);
     ffDisp.print(FFhNext);
-    ffDisp.setPrintPos(FF_POS_X_3, SCREEN_H_MID + short(((FF_CHAR_H + 1) * 0)) + offset + FF_V_CONST);
+    ffDisp.setPrintPos(FF_POS_X_3, FFI_SCREEN_H_MID + short(((FF_CHAR_H + 1) * 0)) + offset + FF_V_CONST);
     ffDisp.print(FFh);
-    ffDisp.setPrintPos(FF_POS_X_3, SCREEN_H_MID + short(((FF_CHAR_H + 1) * 1)) + offset + FF_V_CONST);
+    ffDisp.setPrintPos(FF_POS_X_3, FFI_SCREEN_H_MID + short(((FF_CHAR_H + 1) * 1)) + offset + FF_V_CONST);
     ffDisp.print(FFhPriv);
 
     // Print the statics
     // thousand and tens of thousands
     // and two 0 for the end - two commants are for even spacing (at a cost of performance
-    ffDisp.drawStr(FF_POS_X_4, SCREEN_H_MID + FF_V_CONST, "0"); // Last two digits
-    ffDisp.drawStr(FF_POS_X_5, SCREEN_H_MID + FF_V_CONST, "0"); // Last two digits
+    ffDisp.drawStr(FF_POS_X_4, FFI_SCREEN_H_MID + FF_V_CONST, "0"); // Last two digits
+    ffDisp.drawStr(FF_POS_X_5, FFI_SCREEN_H_MID + FF_V_CONST, "0"); // Last two digits
     
     #ifdef Bezel
       drawBezel();

@@ -52,6 +52,7 @@
 //// Select the correct FFI display driver
 //// SSD1306 dispaly drivers (such as the ones sold by Adafruit and sparkfun)
 #define FFI_SSD1306
+
 //// SH1106 display drivers (commonly found on ebay)
 //#define FFI_SH1106
 
@@ -60,6 +61,7 @@
 /// Define bezel to draw FUEL FLOW and PPH on screen. 
 //// Bezel reduces FPS considerably - if you build a real Bezel, this option should be off
 #define Bezel
+
 //// Define RealFFI to draw "Real" FFI - when not defined a BMS style FFI is drawn
 //// Real FFI animation requires more RAM available there for is not suitable for an Uno if DED/PFL are enabled
 //// Feature is recommended - however disabled by default 

@@ -1,8 +1,8 @@
 //*******************************************************************//
 //  Name    : DEDuino, Arduino displays for FalconBMS                //
 //  Author  : Uri Ben-Avraham                                        //
-//  Date    : 7 Dec, 2014                                            //
-//  Version : 1.1.3                                                  //
+//  Date    : 11 Dec, 2014                                            //
+//  Version : 1.1.4                                                  //
 //  License : MIT                                                    //
 //  Notes   : Uncomment the DEFINE for the Arduino board in use      //
 //          : Boards supported by this version:                      //
@@ -24,6 +24,7 @@
 
 
 ///*************** DO NOT EDIT BELOW THIS LINE WITHOUT INTENT! ***************//
+///********** ALL COMMON CONFIG OPTIONS ARE FOUND THE config.h FILE **********//
 
 
 #ifdef ARDUINO_UNO
