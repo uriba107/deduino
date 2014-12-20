@@ -108,11 +108,12 @@
 // LightPanels general config
 // Light General
 #ifdef Lights
+  #ifdef USE_SPI
     #include <SPI.h>
     #define AoaLatchPin 2 // AOA indexed
     #define CpLatchPin 3 // Caution Panels
-  
-  #include "lights.h"
+    #include "lights_spi.h"
+  #endif
 #endif
 
 ///////////////////////////

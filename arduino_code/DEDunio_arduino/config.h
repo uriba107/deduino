@@ -6,8 +6,8 @@
 //// Arduino Micro is considered the Minimum at this stage of the project
 //// Arduino Due is the recommended Arduino in the long run (able to support future expansions)
 
-#define ARDUINO_UNO
-//#define ARDUINO_MICRO
+//#define ARDUINO_UNO
+#define ARDUINO_MICRO
 //#define ARDUINO_DUE
 
 
@@ -33,6 +33,7 @@
 #endif
 
 #ifdef Lights
+  #define USE_SPI
   #define Indexers_on
 //  #define CautionPanel_on 
 #endif
@@ -49,6 +50,12 @@
 #define Widefont
 
 ////////// FFI //////////
+//****************************************************************************//
+//** NOTE:                                                                  **// 
+//** Due to performance issues, when using Arduino Uno,                     **//
+//** a generic font will be used and the RealFFI animation will be disabled **//
+//****************************************************************************//
+
 //// Select the correct FFI display driver
 //// SSD1306 dispaly drivers (such as the ones sold by Adafruit and sparkfun)
 #define FFI_SSD1306
@@ -64,8 +71,8 @@
 
 //// Define RealFFI to draw "Real" FFI - when not defined a BMS style FFI is drawn
 //// Real FFI animation requires more RAM available there for is not suitable for an Uno if DED/PFL are enabled
-//// Feature is recommended - however disabled by default 
-//#define RealFFI
+//// This feature will be automaticly disabled when using arduino Uno
+#define RealFFI
 
 ////////// DEBUGGING //////////
 //// Enable crosshair to help align text on screens ////

@@ -10,15 +10,24 @@
 #define FFI_SCREEN_W 128
 #define FFI_SCREEN_H 64
 
+
 // FONT DEFINITIONS - Main fuel flow indicator digits
-// - Define font
-#define ffFont fuelflow_u8g // Main font used for actual digits indicating current fuel flow
-// - Define Character width and height
-#define FF_CHAR_W 20
-#define FF_CHAR_H 30
-// - Define Character horizontal and vertical offset. By design this text is perfectly centered on the display. Offset only when needed.
-#define FF_H_CONST 0
-#define FF_V_CONST 0
+#ifdef ARDUINO_UNO
+    #undef RealFFI
+// - Define font (basic generic)
+  #define ffFont u8g_font_fub25n
+#else
+// - Define font (MS33885)
+  #define ffFont fuelflow_u8g // Main font used for actual digits indicating current fuel flow
+#endif
+  // - Define Character width and height
+  #define FF_CHAR_W 20
+  #define FF_CHAR_H 30
+  // - Define Character horizontal and vertical offset. By design this text is perfectly centered on the display. Offset only when needed.
+  #define FF_H_CONST 0
+  #define FF_V_CONST 0
+
+
   
 #ifdef Bezel
   // FONT DEFINITIONS - "FUEL FLOW"-text in bezel
@@ -145,8 +154,7 @@ void initFF() {
       ffDisp.drawFrame(0,0,128,64);
       ffDisp.drawLine(64,0,64,64);
       ffDisp.drawLine(0,32,128,32);
-    #endif
-    
+    #endif    
   } while ( ffDisp.nextPage() );
   /// End Picture loop ///
 }
