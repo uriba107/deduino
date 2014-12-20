@@ -17,7 +17,7 @@
 #include <Arduino.h>
 #include "config.h"
 //*******************************************************************//
-//  All configuration options are set via the "conf.h" file          //
+//  All configuration options are set via the "config.h" file        //
 //  Please DO NOT edit code below this segment                       //
 //  (Unless you know what you are doing - in which case.. have fun!) //
 //*******************************************************************//

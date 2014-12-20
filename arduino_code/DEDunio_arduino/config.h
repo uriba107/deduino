@@ -50,11 +50,11 @@
 #define Widefont
 
 ////////// FFI //////////
-//****************************************************************************//
-//** NOTE:                                                                  **// 
-//** Due to performance issues, when using Arduino Uno,                     **//
-//** a generic font will be used and the RealFFI animation will be disabled **//
-//****************************************************************************//
+//*****************************************************************************************//
+//** NOTE:                                                                               **// 
+//** Due to performance issues, when using Arduino Uno,                                  **//
+//** The RealFFI animation and the Bezel will be Automaticly disabled (check fuelflow.h) **//
+//*****************************************************************************************//
 
 //// Select the correct FFI display driver
 //// SSD1306 dispaly drivers (such as the ones sold by Adafruit and sparkfun)
@@ -65,7 +65,7 @@
 
 //** NOTE: Ebay bought displays are sometime mislabled and SH1106 displays may be SSD1306 (and vice versa) **//
 
-/// Define bezel to draw FUEL FLOW and PPH on screen. 
+/// Define bezel to draw FUEL FLOW and PPH on screen.
 //// Bezel reduces FPS considerably - if you build a real Bezel, this option should be off
 #define Bezel
 

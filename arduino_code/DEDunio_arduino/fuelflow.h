@@ -13,13 +13,13 @@
 
 // FONT DEFINITIONS - Main fuel flow indicator digits
 #ifdef ARDUINO_UNO
+// if running Uno - disable the "expensive stuff" without actually asking the users
+// Advanced user - feel free to disable the undefs following if you are using a Mega or something which has the RAM to handle this - the Uno not as much.
     #undef RealFFI
-// - Define font (basic generic)
-  #define ffFont u8g_font_fub25n
-#else
+    #undef Bezel
+#endif
 // - Define font (MS33885)
   #define ffFont fuelflow_u8g // Main font used for actual digits indicating current fuel flow
-#endif
   // - Define Character width and height
   #define FF_CHAR_W 20
   #define FF_CHAR_H 30
