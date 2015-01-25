@@ -1,8 +1,8 @@
 //*******************************************************************//
 //  Name    : DEDuino, Arduino displays for FalconBMS                //
 //  Author  : Uri Ben-Avraham                                        //
-//  Date    : 20 Dec, 2014                                            //
-//  Version : 1.1.4                                                  //
+//  Date    : 26 Jan, 2015                                           //
+//  Version : 1.1.4a                                                 //
 //  License : MIT                                                    //
 //  Notes   : Uncomment the DEFINE for the Arduino board in use      //
 //          : Boards supported by this version:                      //
@@ -91,7 +91,7 @@
   #include "falconded_full_u8g.h"
   #include "falconded_wide_u8g.h"
   #include "fuelflow_u8g.h"
-
+ 
   #ifdef DED_on
     #include "ded.h"
   #endif
@@ -99,7 +99,7 @@
   #ifdef FuelFlow_on
     #include "fuelflow.h"
   #endif
-
+  
   #ifdef PFD_on
     #include "pfd.h"
   #endif
@@ -142,16 +142,17 @@ void setup() {
   delay(1000); // to allow screen to boot on power on
 
   initSerial();
-  //  initSPI();
+
+  #ifdef FuelFlow_on
+    initFF();
+  #endif
   #ifdef DED_on
     initDED();
   #endif
   #ifdef PFD_on
     initPFD();
   #endif
-  #ifdef FuelFlow_on
-    initFF();
-  #endif
+
   #ifdef Lights
     initLights();
   #endif
@@ -180,7 +181,6 @@ void loop() {
     readFF();
     drawFF();
   #endif
-
   // Indexers
   #ifdef Indexers_on
     updateSharedMem();
@@ -208,4 +208,5 @@ switch (Run) {
         Run = 0;
       break;
   }
+
 }
