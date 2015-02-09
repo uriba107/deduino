@@ -92,12 +92,12 @@
   #include "falconded_wide_u8g.h"
   #include "fuelflow_u8g.h"
  
-  #ifdef DED_on
-    #include "ded.h"
-  #endif
-
   #ifdef FuelFlow_on
     #include "fuelflow.h"
+  #endif
+  
+  #ifdef DED_on
+    #include "ded.h"
   #endif
   
   #ifdef PFD_on
@@ -135,7 +135,11 @@ void setup() {
   digitalWrite(SS,HIGH);
 #endif
     SPI.begin();
-    SPI.setBitOrder(LSBFIRST);
+    #ifdef ARDUINO_DUE
+      SPI.setBitOrder(MSBFIRST);
+    #else
+      SPI.setBitOrder(LSBFIRST);
+    #endif
     SPI.setClockDivider(SPI_CLOCK_DIV2);
 #endif
 
@@ -208,5 +212,4 @@ switch (Run) {
         Run = 0;
       break;
   }
-
 }
