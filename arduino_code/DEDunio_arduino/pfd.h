@@ -3,7 +3,7 @@ U8GLIB_NHD31OLED_2X_BW pfdDisp(PFD_SEL, DISP_A0); //PFD screen SSD1322 based 240
 
 
 // Font settings
-#ifdef Widefont
+#if defined(Widefont) || defined(MoonWidefont)
   #define pfdFont FalconDED_wide
   #define PFD_CHAR_W 10
   #define PFD_CHAR_H 12

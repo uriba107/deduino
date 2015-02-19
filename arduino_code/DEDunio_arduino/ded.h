@@ -1,9 +1,9 @@
 
 // Declare screen Object
-U8GLIB_NHD31OLED_2X_BW dedDisp(DED_SEL, DISP_A0); //DED screen SSD1322 based 240*64 (Buydisplay/rising star)
+  U8GLIB_NHD31OLED_2X_BW dedDisp(DED_SEL, DISP_A0); //DED screen SSD1322 based 240*64 (Buydisplay/rising star)
 
 // Font settings
-#ifdef Widefont
+#if defined(Widefont) || defined(MoonWidefont)
   #define dedFont FalconDED_wide
   #define DED_CHAR_W 10
   #define DED_CHAR_H 12

@@ -20,20 +20,24 @@
 #endif
 
 
-
 void initSerial() {
   COM.begin(BAUDRATE * BAUDRATE_MULTIPLIER);
   COM.setTimeout(SERIAL_TIMEOUT);
 }
 
+#define TIMER millis()-start_time
 void SerialRDY() // Main serial init, allow PC know you are ready to recive data. wait for PC to respond before sending data request message
 {
+  short sleep=0;
+  char buff[1];
   while (COM.available() <= 0)
   {
     COM.print('R');
-    delay(5);
+    if ( sleep != 0 ) {
+      delay(10);
+    }
+    sleep=1;
   }
-  char buff[1];
   COM.readBytesUntil('G', buff, 1);
 }
 

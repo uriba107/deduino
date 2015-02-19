@@ -33,9 +33,14 @@
 #endif
 
 #ifdef Lights
-  #define USE_SPI
+// Select transfer protocol (SPI or I2C)
+  //#define USE_SPI
+  #define USE_I2C
+// Choose what to light up
+// Available to both protocols
   #define Indexers_on
-//  #define CautionPanel_on 
+  //#define CautionPanel_on 
+// Available only on I2C
 #endif
 
 ///////////////////////////////////////////////////////////////////////
@@ -48,6 +53,8 @@
 //// DED and PFL use the same font to save memory, you have two possible fonts.
 //// "Wide" variant is more readable - Font my Alan "Cool Hand" Locatelli. (enabled by default) 
 #define Widefont
+//// Another Variant based on Alan's Widefont. tweaked to be more lifelike
+//#define MoonWidefont
 
 ////////// FFI //////////
 //*****************************************************************************************//

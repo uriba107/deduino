@@ -1,8 +1,8 @@
 //*******************************************************************//
 //  Name    : DEDuino, Arduino displays for FalconBMS                //
 //  Author  : Uri Ben-Avraham                                        //
-//  Date    : 26 Jan, 2015                                           //
-//  Version : 1.1.4a                                                 //
+//  Date    : 19 Feb, 2015                                           //
+//  Version : 1.2.0-alpha1                                           //
 //  License : MIT                                                    //
 //  Notes   : Uncomment the DEFINE for the Arduino board in use      //
 //          : Boards supported by this version:                      //
@@ -88,15 +88,23 @@
   #endif
   
   #include "U8glib.h"
-  #include "falconded_full_u8g.h"
-  #include "falconded_wide_u8g.h"
-  #include "fuelflow_u8g.h"
- 
+
   #ifdef FuelFlow_on
+    #include "fuelflow_u8g.h"
     #include "fuelflow.h"
   #endif
+
+  #if defined DED_on || defined PFD_on
+    #ifdef Widefont
+      #include "falconded_wide_u8g.h"
+    #elif defined  MoonWidefont 
+      #include "falconded_moon_u8g.h"
+    #else 
+      #include "falconded_full_u8g.h"
+    #endif
+  #endif
   
-  #ifdef DED_on
+  #ifdef DED_on 
     #include "ded.h"
   #endif
   
@@ -114,6 +122,13 @@
     #define CpLatchPin 3 // Caution Panels
     #include "lights_spi.h"
   #endif
+  #ifdef USE_I2C
+    #include <Wire.h>
+    #define AoaAddr 0x20
+    #define CpAddr1 0x24
+    #define CpAddr2 0x25
+    #include "lights_i2c.h"
+  #endif
 #endif
 
 ///////////////////////////
@@ -130,10 +145,11 @@ short Run = 0;
 void setup() {
  // Init SPI
 #ifdef Lights
-#ifdef ARDUINO_UNO
-  pinMode(SS,OUTPUT);
-  digitalWrite(SS,HIGH);
-#endif
+  #ifdef USE_SPI
+    #ifdef ARDUINO_UNO
+      pinMode(SS,OUTPUT);
+      digitalWrite(SS,HIGH);
+    #endif
     SPI.begin();
     #ifdef ARDUINO_DUE
       SPI.setBitOrder(MSBFIRST);
@@ -141,6 +157,11 @@ void setup() {
       SPI.setBitOrder(LSBFIRST);
     #endif
     SPI.setClockDivider(SPI_CLOCK_DIV2);
+  #endif
+  
+  #ifdef USE_I2C
+  Wire.begin();
+  #endif
 #endif
 
   delay(1000); // to allow screen to boot on power on
