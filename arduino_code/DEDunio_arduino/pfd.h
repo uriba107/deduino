@@ -58,6 +58,7 @@ void  readPFD() {
 }
 
 void drawPFD() {
+//  MICRO_DELAY
   /// Begin Picture loop ///
   pfdDisp.firstPage();
   do {

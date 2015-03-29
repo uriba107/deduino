@@ -58,6 +58,7 @@ void  readDED() {
 
 void drawDED() {
   /// Begin Picture loop ///
+//  MICRO_DELAY
   dedDisp.firstPage();
   do {
     for (unsigned short i = 0; i < 5; i++ ) {

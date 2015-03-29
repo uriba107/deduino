@@ -84,3 +84,8 @@
 ////////// DEBUGGING //////////
 //// Enable crosshair to help align text on screens ////
 //#define crosshair
+
+
+////////// INTERNAL VARS //////////
+// How many seconds should go by before screens turn off after no response recived to the "I'm alive" signal
+#define SLEEP_TIMER 5

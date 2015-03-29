@@ -5,20 +5,19 @@
 #define BAUDRATE 9600 // base baud rate
 
 #ifdef ARDUINO_UNO
-  #define BAUDRATE_MULTIPLIER 3 // Serial speed multiplier - 3 is a safe number for Ardiuno Uno on a USB hub, YMMV depending on your board and configuration
+#define BAUDRATE_MULTIPLIER 3 // Serial speed multiplier - 3 is a safe number for Ardiuno Uno on a USB hub, YMMV depending on your board and configuration
 #endif
 
 #if defined(ARDUINO_MICRO) || defined(ARDUINO_DUE)
-  #define BAUDRATE_MULTIPLIER 12 // native USB serial - speed is irrlevent it's hardware controled but setting a common cap limit seems like a good idea
+#define BAUDRATE_MULTIPLIER 12 // native USB serial - speed is irrlevent it's hardware controled but setting a common cap limit seems like a good idea
 #endif
 
 #if defined(ARDUINO_UNO) || defined(ARDUINO_MICRO)
-  #define COM Serial
+#define COM Serial
 #endif
 #ifdef ARDUINO_DUE
-  #define COM SerialUSB
+#define COM SerialUSB
 #endif
-
 
 void initSerial() {
   COM.begin(BAUDRATE * BAUDRATE_MULTIPLIER);
@@ -26,26 +25,32 @@ void initSerial() {
 }
 
 #define TIMER millis()-start_time
-void SerialRDY() // Main serial init, allow PC know you are ready to recive data. wait for PC to respond before sending data request message
+bool SerialRDY() // Main serial init, allow PC know you are ready to recive data. wait for PC to respond before sending data request message
 {
-  short sleep=0;
+  byte sleep = 0;
+  unsigned long start_time = millis();
   char buff[1];
   while (COM.available() <= 0)
   {
     COM.print('R');
     if ( sleep != 0 ) {
+      if (TIMER > SLEEP_TIMER * 1000) {
+        return false;
+      }
       delay(10);
     }
-    sleep=1;
+    sleep = 1;
   }
-  COM.readBytesUntil('G', buff, 1);
+  COM.readBytesUntil('G', buff, 2);
+  return true;
 }
 
 ////////// Serial Operation Functions //////////////
 void updateSharedMem() {
   COM.print('U');
   char buff[1];
-  COM.readBytesUntil('k', buff, 1);
+  //  MICRO_DELAY
+  COM.readBytesUntil('k', buff, 2);
 }
 
 #endif

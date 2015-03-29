@@ -17,10 +17,12 @@ void initLights() {
   // Caution Panel
   pinMode(CpLatchPin, OUTPUT);
   digitalWrite(CpLatchPin, LOW); // pull caution panel CS low
+
   for (short i = 0; i < 4; i++) { //send 4 byte to clear Caution lights
     SPI.transfer(0);
   }
   digitalWrite(CpLatchPin, HIGH); // light 'em up
+
   #endif //caution
 }
 
@@ -34,6 +36,7 @@ void readAOA() {
 
 void lightAOA() {
   digitalWrite(AoaLatchPin, LOW); // pull Indexers CS low
+//  MICRO_DELAY
   SPI.transfer(AoaIndexer[0]);
   digitalWrite(AoaLatchPin, HIGH); // light 'em up
 }
@@ -50,11 +53,11 @@ void readCautionPanel() {
 
 void lightCautionPanel() {
   digitalWrite(CpLatchPin, LOW); // pull caution panel CS low
+//  MICRO_DELAY
   for (short i = 0; i < 4; i++) {
     SPI.transfer(CautionPanel[i]);
   }
   digitalWrite(CpLatchPin, HIGH); // light 'em up
-
 }
 #endif //caution
 
