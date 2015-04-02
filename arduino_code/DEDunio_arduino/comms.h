@@ -19,29 +19,39 @@
 #define COM SerialUSB
 #endif
 
+
 void initSerial() {
   COM.begin(BAUDRATE * BAUDRATE_MULTIPLIER);
   COM.setTimeout(SERIAL_TIMEOUT);
 }
 
 #define TIMER millis()-start_time
+bool wentDark = false; 
+
 bool SerialRDY() // Main serial init, allow PC know you are ready to recive data. wait for PC to respond before sending data request message
 {
-  byte sleep = 0;
+  unsigned short count = 0;
+  bool addDelay = false; // begine with no delay
   unsigned long start_time = millis();
   char buff[1];
-  while (COM.available() <= 0)
+  while (COM.available() <= 0) // Wait for comm response
   {
     COM.print('R');
-    if ( sleep != 0 ) {
-      if (TIMER > SLEEP_TIMER * 1000) {
+    if ( addDelay ) {
+      if ((TIMER > SLEEP_TIMER * 1000) && (!wentDark)) { //if you have still not went dark, and timeout is over, set dark and getout to blackout everything (only once)
+        wentDark = true;
         return false;
       }
       delay(10);
     }
-    sleep = 1;
+    if ( (count > 10) && (!addDelay) ) { // If this is the 10th round, and delay was not set, add delay
+      addDelay = true;
+    } else {
+      count++;
+    }
   }
   COM.readBytesUntil('G', buff, 2);
+  wentDark = false;
   return true;
 }
 

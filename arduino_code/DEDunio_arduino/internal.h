@@ -32,5 +32,4 @@ void goDark() {
     CautionPanel[i] = 0;
   }
 #endif
-
 }

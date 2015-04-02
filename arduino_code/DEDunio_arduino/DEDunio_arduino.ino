@@ -143,7 +143,7 @@ short Run = 0;
 
 /////// Main Program /////////////
 void setup() {
-  // Init SPI
+  // Init SPI/WIRE
 #ifdef Lights
   #ifdef USE_SPI
     #ifdef ARDUINO_UNO
@@ -167,7 +167,7 @@ void setup() {
 
   delay(1000); // to allow screen to boot on power on
 
-  initSerial();
+initSerial();
 
 #ifdef FuelFlow_on
   initFF();

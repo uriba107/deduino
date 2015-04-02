@@ -7,7 +7,8 @@ Project Blog: http://pits.108vfs.org
 1. an Arduino or compatible board:
   * Arduino Uno (or compatible)
   * Arduino Micro (or compatible)
-  * all other arduino types (mega/leonardo/Due) will require code to be adjusted
+  * Arduino Due (or compatible)
+  * all similar Arduino/Arduino-like variations (Mega/leonardo/pro Micro) will require code to be adjusted
 2. For DED/PFL: One 2.8" 256*64 OLED display, SSD1322 based
   * [BuyDisplay 2.8" yello on black oled](http://www.buydisplay.com/default/spi-2-8-inch-oled-arduino-256x64-graphic-module-with-pcb-yellow-on-black)
   * other screens may be also compatible - but may require code edit
@@ -22,16 +23,16 @@ Project Blog: http://pits.108vfs.org
 
 ### Software:
 1. Arduino IDE
-2. Windows Vista and up with .net 4.5 installed (XP does not suppoer .net4.5 and I've not tested the supplied connector app with .net4.0)
+2. Windows Vista and up with .net 4.5 installed (XP does not support .net4.5 and I've not tested the supplied connector app with .net4.0)
 3. Falcon BMS 4.32+
 
 ## How to use:
 ### Initial setup:
 1. Download and install the Arduino IDE (if not already installed)
-2. Download the Arduino code - uncomment the correct define for your arduino version (Uno, Micro or Due).
+2. Download the Arduino code
 3. In the Arduino IDE - "Add library" choose "U8glib_DEDuino" it's standard U8glib 1.16 with 16BIT support enabled (required for the large displays)
-4. Uncomment the define statements for the periferials you want to use. please note that adding both DED and PFL may have an impact on performace.
-5. Advanced - If needed modify the loop function (for PFD only configuration for example).
+4. In "config.h" and uncomment the correct define for your arduino version (Uno, Micro or Due).
+5. In "config.h" Uncomment the define statements for the periferials you want to use. please note that adding both DED and PFL may have an impact on performace.
 6. Wire prereferials according the the pinout in the code. Please pay attention to the SCK and MOSI pins and the latchpins
 7. Upload code to your Arduino.
 8. Download the DEDuino Windows app and place it in a folder of your choosing (no installation required)
@@ -66,3 +67,6 @@ In the PCB folder you would find Eagle files and PDFs with schematics and board 
 
 ## Enclosures
 In the "enclosure" folders you'll find some stractual stuff, like the foamboard DED box.
+
+## Notes and remarks
+While the project is OpenSource. Currently I'm holding back the source code for the PC connector application. That is done because The code is a mess, I need to properly document it before I release it. Hopfully sometime this year. Nothing secret about it :)
