@@ -49,10 +49,11 @@ void initDED() {
 
 void  readDED() {
   for (short i = 0; i < 5; i++) {
+    
     COM.print("D");
     COM.print(i);
-//    Serial.flush();
-    COM.readBytes(DED[i], 25);
+    COM.flush();
+    COM.readBytesUntil(0,DED[i], 25);
   }
 }
 

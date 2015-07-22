@@ -1,8 +1,8 @@
 //*******************************************************************//
 //  Name    : DEDuino, Arduino displays for FalconBMS                //
 //  Author  : Uri Ben-Avraham                                        //
-//  Date    : 30 Mar, 2015                                           //
-//  Version : 1.2.0-alpha2                                           //
+//  Date    : 22 Jul, 2015                                           //
+//  Version : 1.2.0-alpha3                                           //
 //  License : MIT                                                    //
 //  Notes   : Uncomment the DEFINE for the Arduino board in use      //
 //          : Boards supported by this version:                      //
@@ -26,7 +26,7 @@
 
 ///*************** DO NOT EDIT BELOW THIS LINE WITHOUT INTENT! ***************//
 ///********** ALL COMMON CONFIG OPTIONS ARE FOUND THE config.h FILE **********//
-#define MICRO_DELAY delayMicroseconds(100);
+#define MICRO_DELAY delayMicroseconds(250);
 #ifdef ARDUINO_UNO
 ///////////////////////////////////////////////////////////////////////
 //  Arduino Uno                                                      //
