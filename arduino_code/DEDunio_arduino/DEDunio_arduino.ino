@@ -1,8 +1,8 @@
 //*******************************************************************//
 //  Name    : DEDuino, Arduino displays for FalconBMS                //
 //  Author  : Uri Ben-Avraham                                        //
-//  Date    : 22 Jul, 2015                                           //
-//  Version : 1.2.0-alpha3                                           //
+//  Date    : 24 Jul, 2015                                           //
+//  Version : 1.2.0-alpha4                                           //
 //  License : MIT                                                    //
 //  Notes   : Uncomment the DEFINE for the Arduino board in use      //
 //          : Boards supported by this version:                      //
@@ -77,6 +77,9 @@
     #define DED_SEL 8
     #define FF_SEL 7
     #define PFD_SEL 6
+    #define CMDS_SEL 5
+    #define EXT1_SEL 4
+    #define EXT2_SEL 3
   #endif
 
   #ifdef ARDUINO_MICRO
@@ -84,6 +87,9 @@
     #define DED_SEL 11
     #define FF_SEL 10
     #define PFD_SEL 9
+    #define CMDS_SEL 8
+    #define EXT1_SEL 7
+    #define EXT2_SEL 6
   #endif
 
   #include "U8glib.h"
@@ -110,6 +116,10 @@
   #ifdef PFD_on
     #include "pfd.h"
   #endif
+  
+  #ifdef CMDS_on
+    #include "cmds.h"
+  #endif  
 #endif
 
 // LightPanels general config
@@ -178,6 +188,9 @@ initSerial();
 #ifdef PFD_on
   initPFD();
 #endif
+#ifdef CMDS_on
+  initCMDS();
+#endif
 
 #ifdef Lights
   initLights();
@@ -231,6 +244,14 @@ void loop() {
       updateSharedMem();
       readCautionPanel();
       lightCautionPanel();
+#endif
+      Run = 2;
+   case 2:
+#ifdef CMDS_on
+      // Caution panel
+      updateSharedMem();
+      readCMDS();
+      drawCMDS();
 #endif
       Run = 0;
       break;

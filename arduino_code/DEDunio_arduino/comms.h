@@ -1,7 +1,12 @@
 #ifndef comms_h
 #define comms_h
 
-#define SERIAL_TIMEOUT 50 // too low of a value will cause displays to jump as connection is not fast enogth
+#if defined(ARDUINO_UNO) || defined(ARDUINO_MICRO)
+  #define SERIAL_TIMEOUT 150 // too low of a value will cause displays to jump as connection is not fast enogth
+#else
+  #define SERIAL_TIMEOUT 50 // too low of a value will cause displays to jump as connection is not fast enogth
+#endif
+
 #define BAUDRATE 9600 // base baud rate
 
 #ifdef ARDUINO_UNO
@@ -12,10 +17,10 @@
 #define BAUDRATE_MULTIPLIER 12 // native USB serial - speed is irrlevent it's hardware controled but setting a common cap limit seems like a good idea
 #endif
 
-#if defined(ARDUINO_UNO) || defined(ARDUINO_MICRO)
+#if defined(ARDUINO_UNO)
 #define COM Serial
 #endif
-#ifdef ARDUINO_DUE
+#if defined(ARDUINO_DUE) || defined(ARDUINO_MICRO)
 #define COM SerialUSB
 #endif
 

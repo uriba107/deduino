@@ -7,8 +7,8 @@
 //// Arduino Due is the recommended Arduino in the long run (able to support future expansions)
 
 //#define ARDUINO_UNO
-#define ARDUINO_MICRO
-//#define ARDUINO_DUE
+//#define ARDUINO_MICRO
+#define ARDUINO_DUE
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -19,7 +19,7 @@
 ///////////////////////////////////////////////////////////////////////
 
 #define Screens //global enable screens
-//#define Lights //global enable lights 
+#define Lights //global enable lights 
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -30,6 +30,7 @@
   #define DED_on
   #define FuelFlow_on
 //  #define PFD_on 
+//  #define CMDS_on //Experimental Do not use
 #endif
 
 #ifdef Lights

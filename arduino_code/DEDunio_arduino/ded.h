@@ -53,7 +53,7 @@ void  readDED() {
     COM.print("D");
     COM.print(i);
     COM.flush();
-    COM.readBytesUntil(0,DED[i], 25);
+    COM.readBytes(DED[i], 25);
   }
 }
 
