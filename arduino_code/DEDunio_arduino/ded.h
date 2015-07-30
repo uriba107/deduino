@@ -21,7 +21,7 @@
 #endif
 
 // Global Variable required
-char DED[5][26] = {{ 0 }};
+char DED[5][25] = {{ 0 }};
 
 ////////////////////
 //// Functions ////
@@ -48,12 +48,10 @@ void initDED() {
 }
 
 void  readDED() {
+  COM.print("d");
   for (short i = 0; i < 5; i++) {
-    
-    COM.print("D");
-    COM.print(i);
-    COM.flush();
-    COM.readBytes(DED[i], 25);
+    COM.print(i); 
+    commsCheck(COM.readBytes(DED[i], 24));
   }
 }
 

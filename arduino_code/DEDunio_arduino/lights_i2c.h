@@ -50,11 +50,13 @@ byte AoaIndexer[1];
 
 void readAOA() {
   COM.print('A');
-  COM.readBytes(AoaIndexer, 1);
+  commsCheck(COM.readBytes(AoaIndexer, 1));
+//  if(!COM.readBytes(AoaIndexer, 1)){
+//    wentDark = true;
+//  }
 }
 
 void lightAOA() {
-//  MICRO_DELAY
   Wire.beginTransmission(AoaAddr); // transmit to device #4
   Wire.write(~(AoaIndexer[0]));              // sends one byte  
   Wire.endTransmission();  

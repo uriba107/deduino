@@ -25,7 +25,7 @@ U8GLIB_NHD31OLED_2X_BW pfdDisp(PFD_SEL, DISP_A0); //PFD screen SSD1322 based 240
 
 
 // Global Variable required
-char PFD[5][26] =  {{ 0 }};
+char PFD[5][25] =  {{ 0 }};
 
 ////////////////////
 //// Functions ////
@@ -50,10 +50,10 @@ void initPFD() {
 }
 
 void  readPFD() {
+  COM.print("p");
   for (short i = 0; i < 5; i++) {
-    COM.print("P");
     COM.print(i);
-    COM.readBytes(PFD[i], 25);
+    COM.readBytes(PFD[i], 24);
   }
 }
 

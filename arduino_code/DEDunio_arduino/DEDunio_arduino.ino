@@ -1,19 +1,19 @@
-//*******************************************************************//
-//  Name    : DEDuino, Arduino displays for FalconBMS                //
-//  Author  : Uri Ben-Avraham                                        //
-//  Date    : 24 Jul, 2015                                           //
-//  Version : 1.2.0-alpha4                                           //
-//  License : MIT                                                    //
-//  Notes   : Uncomment the DEFINE for the Arduino board in use      //
-//          : Boards supported by this version:                      //
-//          : Arduino Uno, Arduino Micro & Arduino Due               //
-//          : All Common Config options are found under "config.h"   //
-//          :                                                        //
-//          : Uncomment the DEFINE for the features you wish to use  //
-//          : Features included in this version:                     //
-//          : Displays: DED, FFI, PFD                                //
-//          : Lights: Indexers, Caution Panel                        //
-//*******************************************************************//
+//**********************************************************************//
+//  Name    : DEDuino, Arduino displays for FalconBMS                   //
+//  Author  : Uri Ben-Avraham                                           //
+//  Date    : 30 Jul, 2015                                              //
+//  Version : 1.2.0-alpha5                                              //
+//  License : MIT                                                       //
+//  Notes   : Uncomment the DEFINE for the Arduino board in use         //
+//          : Boards supported by this version:                         //
+//          : Arduino Uno, Arduino Micro & Arduino Due                  //
+//          : All Common Config options are found under "config.h"      //
+//          :                                                           //
+//          : Uncomment the DEFINE for the features you wish to use     //
+//          : Features included in this version:                        //
+//          : Displays: DED, FFI, PFD                                   //
+//          : Lights: Indexers, Caution Panel                           //
+//**********************************************************************//
 
 #include <Arduino.h>
 #include "config.h"
@@ -28,13 +28,13 @@
 ///********** ALL COMMON CONFIG OPTIONS ARE FOUND THE config.h FILE **********//
 #define MICRO_DELAY delayMicroseconds(250);
 #ifdef ARDUINO_UNO
-///////////////////////////////////////////////////////////////////////
-//  Arduino Uno                                                      //
-//  SCK - Pin 13                                                     //
-//  MISO - Pin 12 (not used in this project)                         //
-//  MOSI - Pin 11                                                    //
-//  SS - Pin10 (set to output and pulled high on setup)              //
-///////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//  Arduino Uno                                                         //
+//  SCK - Pin 13                                                        //
+//  MISO - Pin 12 (not used in this project)                            //
+//  MOSI - Pin 11                                                       //
+//  SS - Pin10 (set to output and pulled high on setup)                 //
+//////////////////////////////////////////////////////////////////////////
 // Define SPI Pins
 #define SCK 13
 #define MISO 12
@@ -43,24 +43,28 @@
 #endif
 
 #ifdef ARDUINO_MICRO
-///////////////////////////////////////////////////////////////////////
-//  Arduino Micro                                                    //
-//  SCK, MISO, MOSI - all on dedicated pins no defines needed        //
-//  Just plug the Arduino Micro into the Main PCB                    //
-///////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//  Arduino Micro                                                       //
+//  SCK, MISO, MOSI - all on dedicated pins no defines needed           //
+//  Just plug the Arduino Micro into the Main PCB                       //
+//////////////////////////////////////////////////////////////////////////
 #endif
 
 #ifdef ARDUINO_DUE
-///////////////////////////////////////////////////////////////////////
-//  Arduino Due                                                      //
-//  SCK, MISO, MOSI - all located on the ICSP header                 //
-//  Only MOSI and SCK needs to be connected via the ICSP             //
-//                                                                   //
-//     1 - MISO | 0 0 | 2 - VCC                                      //
-//     3 - SCK  | 0 0 | 4 - MOSI                                     //
-//     5 - Reset| 0 0 | 6 - GND                                      //
-//                                                                   //
-///////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//  Arduino Due                                                         //
+//  SCK, MISO, MOSI - all located on the ICSP header                    //
+//  Only MOSI and SCK needs to be connected via the ICSP                //
+//                                                                      //
+//     1 - MISO | 0 0 | 2 - VCC                                         //
+//     3 - SCK  | 0 0 | 4 - MOSI                                        //
+//     5 - Reset| 0 0 | 6 - GND                                         //
+//                                                                      //
+//  NOTE:                                                               //
+//  * Arduino Due has TWO (2) ICSP headers,                             //
+//    Use the once closer to the ARM chip (not next to the power jack)  //
+//  * Connect the Arduino Due using the "Native USB" port               //
+//////////////////////////////////////////////////////////////////////////
 #endif
 
 ///////////////////
@@ -175,7 +179,7 @@ void setup() {
   #endif
 #endif
 
-  delay(1000); // to allow screen to boot on power on
+delay(2000); // to allow screens to boot on power on defore init.
 
 initSerial();
 
@@ -195,35 +199,34 @@ initSerial();
 #ifdef Lights
   initLights();
 #endif
+
+ delay(2000); // To allow user to verify everything is wroking (as new logic does not allow the stadby messages to stay)
 }
 
 void loop() {
-  if (!SerialRDY()) {
+  if (gotoSleep) {
     goDark();
   }
+  
   // Fuel Flow
 #ifdef FuelFlow_on
-  updateSharedMem();
   readFF();
   drawFF();
 #endif
 
   //DED
 #ifdef DED_on
-  updateSharedMem();
   readDED();
   drawDED();
 #endif
 
   // Fuel Flow (again) - for refresh rate
 #ifdef FuelFlow_on
-  updateSharedMem();
   readFF();
   drawFF();
 #endif
   // Indexers
 #ifdef Indexers_on
-  updateSharedMem();
   readAOA();
   lightAOA();
 #endif
@@ -232,7 +235,6 @@ void loop() {
   switch (Run) {
     case 0:
 #ifdef PFD_on
-      updateSharedMem();
       readPFD();
       drawPFD();
 #endif
@@ -241,7 +243,6 @@ void loop() {
     case 1:
 #ifdef CautionPanel_on
       // Caution panel
-      updateSharedMem();
       readCautionPanel();
       lightCautionPanel();
 #endif
@@ -249,7 +250,6 @@ void loop() {
    case 2:
 #ifdef CMDS_on
       // Caution panel
-      updateSharedMem();
       readCMDS();
       drawCMDS();
 #endif

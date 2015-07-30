@@ -160,7 +160,7 @@ void initFF() {
 
 void readFF() {
   COM.print('F');
-  COM.readBytesUntil(0,FuelFlow, 5);
+  commsCheck(COM.readBytes(FuelFlow, 5));
 }
 
 void drawFF() {

@@ -19,7 +19,7 @@
 ///////////////////////////////////////////////////////////////////////
 
 #define Screens //global enable screens
-#define Lights //global enable lights 
+//#define Lights //global enable lights 
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -30,7 +30,7 @@
   #define DED_on
   #define FuelFlow_on
 //  #define PFD_on 
-//  #define CMDS_on //Experimental Do not use
+//  #define CMDS_on //Experimental not for use
 #endif
 
 #ifdef Lights

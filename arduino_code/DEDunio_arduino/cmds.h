@@ -30,11 +30,10 @@ void initCMDS() {
 }
 
 void  readCMDS() {
+  COM.print("M");
   for (short i = 0; i < 2; i++) {
-    COM.print("M");
     COM.print(i);
-    COM.flush();
-    COM.readBytesUntil(0,CMDS[i], 22);
+    COM.readBytes(CMDS[i], 22);
   }
 }
 
