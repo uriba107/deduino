@@ -1,8 +1,8 @@
 //**********************************************************************//
 //  Name    : DEDuino, Arduino displays for FalconBMS                   //
 //  Author  : Uri Ben-Avraham                                           //
-//  Date    : 30 Jul, 2015                                              //
-//  Version : 1.2.0-alpha5                                              //
+//  Date    : 02 Aug, 2015                                              //
+//  Version : 1.2.0-alpha5b                                             //
 //  License : MIT                                                       //
 //  Notes   : Uncomment the DEFINE for the Arduino board in use         //
 //          : Boards supported by this version:                         //
@@ -76,26 +76,6 @@
 
 // displays
 #ifdef Screens
-  #if defined(ARDUINO_UNO) || defined(ARDUINO_DUE)
-    #define DISP_A0 9
-    #define DED_SEL 8
-    #define FF_SEL 7
-    #define PFD_SEL 6
-    #define CMDS_SEL 5
-    #define EXT1_SEL 4
-    #define EXT2_SEL 3
-  #endif
-
-  #ifdef ARDUINO_MICRO
-    #define DISP_A0 12
-    #define DED_SEL 11
-    #define FF_SEL 10
-    #define PFD_SEL 9
-    #define CMDS_SEL 8
-    #define EXT1_SEL 7
-    #define EXT2_SEL 6
-  #endif
-
   #include "U8glib.h"
 
   #ifdef FuelFlow_on
@@ -131,15 +111,10 @@
 #ifdef Lights
   #ifdef USE_SPI
     #include <SPI.h>
-    #define AoaLatchPin 2 // AOA indexed
-    #define CpLatchPin 3 // Caution Panels
     #include "lights_spi.h"
   #endif
   #ifdef USE_I2C
     #include <Wire.h>
-    #define AoaAddr 0x20
-    #define CpAddr1 0x24
-    #define CpAddr2 0x25
     #include "lights_i2c.h"
   #endif
 #endif

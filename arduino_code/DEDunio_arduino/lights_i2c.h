@@ -2,48 +2,38 @@
 #define lights_h
 
 #include "Arduino.h"
+#include "i2c_hardware.h"
 
+///////////////////////////////////////////// Generic Functions ////////////////////////////////////////////
 void initLights() {
 #ifdef Indexers_on
   // Indexer using one PCF8574
-//  MICRO_DELAY
-  Wire.beginTransmission(AoaAddr); // transmit to device #4
-  Wire.write(189);              // sends one byte  
-  Wire.endTransmission(); 
+  PCF8574_send(AoaAddr, ~(66)); // Light two green lights (invert byte)
 #endif //indexers
 
 #ifdef CautionPanel_on
-  // Caution Panel via 2 MCP23017
-//  MICRO_DELAY
-  Wire.beginTransmission(CpAddr1); // transmit to device #4
-  Wire.write(0x00); // Set IODIR0
-  Wire.write(0); // Set IODIR0 to output
-  Wire.write(0);  // Set IODIR1 to output
-  Wire.endTransmission(); 
-  
-  Wire.beginTransmission(CpAddr2); // transmit to device #4
-  Wire.write(0x00); // Set IODIR0
-  Wire.write(0); // Set IODIR0 to output
-  Wire.write(0);  // Set IODIR1 to output
-  Wire.endTransmission(); 
+  // Caution Panel via PCA9505 (Jshep CP)
+  PCA9505_SetOutptMode(CpAddr);
+  PCA9505_SendOutputData(CpAddr,5,{0});
 
+// using 2 MCP23017 for the CP will look like this
+//  MCP23017_SetOutptMode(Cpaddr1);
+//  MCP23017_SetOutptMode(Cpaddr2);
 
-  Wire.beginTransmission(CpAddr1); // transmit to device #4
-  Wire.write(0x12); //Address GPIO0 with rollover to 1
-  for (short i = 0; i < 2; i++) { //send 4 byte to clear Caution lights
-    Wire.write(0);              // sends one byte  
-  }
-  Wire.endTransmission(); 
-  
-  Wire.beginTransmission(CpAddr2); // transmit to device #4
-  Wire.write(0x12); //Address GPIO0 with rollover to 1
-  for (short i = 2; i < 4; i++) { //send 4 byte to clear Caution lights
-    Wire.write(0);              // sends one byte  
-  }
-  Wire.endTransmission(); 
+//  MCP23017_SendOutputData(CpAddr1, 0, 0);
+//  MCP23017_SendOutputData(CpAddr2, 0, 0);
+#endif //caution
 
-  #endif //caution
+#ifdef Glareshield_on
+// Glareshield via MCP23017
+  MCP23017_SetOutptMode(GsAddr);
+  MCP23017_SendOutputData(GsAddr, 0, 0);
+#endif //Glareshield
+
 }
+
+
+////// Indexers ///////
 
 #ifdef Indexers_on
 byte AoaIndexer[1];
@@ -51,47 +41,48 @@ byte AoaIndexer[1];
 void readAOA() {
   COM.print('A');
   commsCheck(COM.readBytes(AoaIndexer, 1));
-//  if(!COM.readBytes(AoaIndexer, 1)){
-//    wentDark = true;
-//  }
+
 }
 
 void lightAOA() {
-  Wire.beginTransmission(AoaAddr); // transmit to device #4
-  Wire.write(~(AoaIndexer[0]));              // sends one byte  
-  Wire.endTransmission();  
+  PCF8574_send(AoaAddr, ~(AoaIndexer[0])); //PCF8574 sinks current, so inverse the byte you are sending
 }
 #endif //indexers
 
+////// Caution Panel ///////
 #ifdef CautionPanel_on
-
-byte CautionPanel[4];
+// Caution panel is only 4 bytes. however Shep's CP is using 5 bytes data structure with random bits all over.
+// if you use your own stuff, only use the first 4 bytes (the fifth will be all 0)
+byte CautionPanel[5]; 
 
 void readCautionPanel() {
   COM.print('C');
-  COM.readBytes(CautionPanel, 4);
+  COM.readBytes(CautionPanel, 5);
 }
 
 void lightCautionPanel() {
-//  MICRO_DELAY
-  Wire.beginTransmission(CpAddr1); // transmit to device #4
-  Wire.write(0x12); //Address GPIO0 with rollover to 1
-
-  for (short i = 0; i < 2; i++) { //send 4 byte to clear Caution lights
-    Wire.write(CautionPanel[i]);              // sends one byte  
-  }
-  Wire.endTransmission(); 
-
-//  MICRO_DELAY
-  Wire.beginTransmission(CpAddr2); // transmit to device #4
-  Wire.write(0x12); //Address GPIO0 with rollover to 1  
-  for (short i = 2; i < 4; i++) { //send 4 byte to clear Caution lights
-    Wire.write(CautionPanel[i]);              // sends one byte  
-  }
+    // Caution Panel via PCA9505 (Jshep CP)
+  PCA9505_SendOutputData(CpAddr,5,CautionPanel);
   
-  Wire.endTransmission(); 
+// using 2 MCP23017 for the CP will look like this
+//  MCP23017_SendOutputData(CpAddr1, CautionPanel[0], CautionPanel[1]);
+//  MCP23017_SendOutputData(CpAddr2, CautionPanel[2], CautionPanel[3]);
 }
 #endif //caution
+
+#ifdef Glareshield_on
+
+byte GlareShield[2];
+
+void readGlareShield() {
+  COM.print('G');
+  COM.readBytes(GlareShield, 2);
+}
+
+void lightGlareshield() {
+  MCP23017_SendOutputData(GsAddr, GlareShield[0], GlareShield[1]);
+}
+#endif //Glareshield
 
 #endif //ndef
 

@@ -36,6 +36,11 @@ void goDark() {
   }
 #endif
 
+#ifdef Glareshield_on
+  for (short i = 0; i < 2; i++ ) {
+    GlareShield[i] = 0;
+  }
+#endif
 }
 #endif
 

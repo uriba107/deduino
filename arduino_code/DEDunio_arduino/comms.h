@@ -4,7 +4,7 @@
 #if defined(ARDUINO_UNO) || defined(ARDUINO_MICRO)
 #define SERIAL_TIMEOUT 100 // too low of a value will cause displays to jump as connection is not fast enogth
 #else
-#define SERIAL_TIMEOUT 50 // too low of a value will cause displays to jump as connection is not fast enogth
+#define SERIAL_TIMEOUT 5000 // too low of a value will cause displays to jump as connection is not fast enogth
 #endif
 
 #define BAUDRATE 9600 // base baud rate

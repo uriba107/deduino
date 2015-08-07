@@ -31,18 +31,24 @@
   #define FuelFlow_on
 //  #define PFD_on 
 //  #define CMDS_on //Experimental not for use
+
 #endif
 
 #ifdef Lights
 // Select transfer protocol (SPI or I2C)
+// SPI is retained for legacy support I2C is preferable
   //#define USE_SPI
   #define USE_I2C
+  
 // Choose what to light up
 // Available to both protocols
   #define Indexers_on
-  //#define CautionPanel_on 
+//  #define CautionPanel_on 
+
 // Available only on I2C
+//  #define Glareshield_on
 #endif
+
 
 ///////////////////////////////////////////////////////////////////////
 // Sub-Module config                                                 //
@@ -86,6 +92,51 @@
 //// Enable crosshair to help align text on screens ////
 //#define crosshair
 
+///*************** DO NOT EDIT BELOW THIS LINE WITHOUT INTENT! ***************//
+
+///////////////////////////////////////////////////////////////////////
+// Sub-Module Pinout configurations                                  //
+// (Advanced settings - Don't change unless you mean it              //
+///////////////////////////////////////////////////////////////////////
+
+// Screen pins should be relativly static
+#ifdef Screens
+  #if defined(ARDUINO_UNO) || defined(ARDUINO_DUE)
+    #define DISP_A0 9
+    #define DED_SEL 8
+    #define FF_SEL 7
+    #define PFD_SEL 6
+    #define CMDS_SEL 5
+    #define EXT1_SEL 4
+    #define EXT2_SEL 3
+  #endif
+
+  #ifdef ARDUINO_MICRO
+    #define DISP_A0 12
+    #define DED_SEL 11
+    #define FF_SEL 10
+    #define PFD_SEL 9
+    #define CMDS_SEL 8
+    #define EXT1_SEL 7
+    #define EXT2_SEL 6
+  #endif
+#endif
+
+// Adjust i2c addresses to fit your rig.
+// you will probably need to adjust the lights_i2c.h and i2c_hardware.h to suit your specific board/hardware
+#ifdef Lights
+   #ifdef USE_I2C
+       #define AoaAddr 0x20
+       #define CpAddr  0x21
+       #define GsAddr  0x24
+
+   #endif
+// Retained for Legacy support - i2c is preferable.
+   #ifdef USE_SPI
+       #define AoaLatchPin 2 // AOA indexed
+       #define CpLatchPin 3 // Caution Panels
+   #endif
+#endif
 
 ////////// INTERNAL VARS //////////
 // How many seconds should go by before screens turn off after no response recived to the "I'm alive" signal
