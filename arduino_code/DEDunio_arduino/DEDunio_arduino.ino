@@ -1,8 +1,8 @@
 //**********************************************************************//
 //  Name    : DEDuino, Arduino displays for FalconBMS                   //
 //  Author  : Uri Ben-Avraham                                           //
-//  Date    : 02 Aug, 2015                                              //
-//  Version : 1.2.0-alpha5b                                             //
+//  Date    : 08 Aug, 2015                                              //
+//  Version : 1.2.0-alpha6                                             //
 //  License : MIT                                                       //
 //  Notes   : Uncomment the DEFINE for the Arduino board in use         //
 //          : Boards supported by this version:                         //
@@ -213,6 +213,11 @@ void loop() {
       readPFD();
       drawPFD();
 #endif
+#ifdef Glareshield_on
+      // Caution panel
+      readGlareShield();
+      lightGlareshield();
+#endif
       Run = 1;
       break;
     case 1:
@@ -221,14 +226,11 @@ void loop() {
       readCautionPanel();
       lightCautionPanel();
 #endif
-      Run = 2;
-   case 2:
 #ifdef CMDS_on
       // Caution panel
       readCMDS();
       drawCMDS();
 #endif
       Run = 0;
-      break;
   }
 }

@@ -27,7 +27,7 @@ void initLights() {
 #ifdef Glareshield_on
 // Glareshield via MCP23017
   MCP23017_SetOutptMode(GsAddr);
-  MCP23017_SendOutputData(GsAddr, 0, 0);
+  MCP23017_SendOutputData(GsAddr, 0x55, 0x55);
 #endif //Glareshield
 
 }
@@ -80,7 +80,7 @@ void readGlareShield() {
 }
 
 void lightGlareshield() {
-  MCP23017_SendOutputData(GsAddr, GlareShield[0], GlareShield[1]);
+  MCP23017_SendOutputData(GsAddr, ~(GlareShield[1]), ~(GlareShield[0]));
 }
 #endif //Glareshield
 
