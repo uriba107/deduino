@@ -52,7 +52,7 @@ void lightAOA() {
 ////// Caution Panel ///////
 #ifdef CautionPanel_on
 // Caution panel is only 4 bytes. however Shep's CP is using 5 bytes data structure with random bits all over.
-// if you use your own stuff, only use the first 4 bytes (the fifth will be all 0)
+// if you use your own Hardware, only use the first 4 bytes (the fifth will be all 0)
 byte CautionPanel[5]; 
 
 void readCautionPanel() {

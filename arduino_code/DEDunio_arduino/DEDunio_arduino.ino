@@ -1,8 +1,8 @@
 //**********************************************************************//
 //  Name    : DEDuino, Arduino displays for FalconBMS                   //
 //  Author  : Uri Ben-Avraham                                           //
-//  Date    : 08 Aug, 2015                                              //
-//  Version : 1.2.0-alpha6                                             //
+//  Date    : 12 Aug, 2015                                              //
+//  Version : 1.2.0-alpha7                                             //
 //  License : MIT                                                       //
 //  Notes   : Uncomment the DEFINE for the Arduino board in use         //
 //          : Boards supported by this version:                         //
@@ -46,7 +46,8 @@
 //////////////////////////////////////////////////////////////////////////
 //  Arduino Micro                                                       //
 //  SCK, MISO, MOSI - all on dedicated pins no defines needed           //
-//  Just plug the Arduino Micro into the Main PCB                       //
+//  use the Arduino Micro Pinout for reference                          //
+//  https://www.arduino.cc/en/uploads/Main/ArduinoMicro_Pinout3.png     //
 //////////////////////////////////////////////////////////////////////////
 #endif
 

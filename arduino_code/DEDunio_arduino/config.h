@@ -5,10 +5,13 @@
 //// Arduino Uno is the default as it is the most common - how ever it is NOT the recommended Arduino to use due to it's low amount of SRAM
 //// Arduino Micro is considered the Minimum at this stage of the project
 //// Arduino Due is the recommended Arduino in the long run (able to support future expansions)
+//// There are two USB connections on the DUE, the NATIVE is the recommended, but in some cases driver issues may strike.
 
 //#define ARDUINO_UNO
 //#define ARDUINO_MICRO
-#define ARDUINO_DUE
+#define ARDUINO_DUE_NATIVE
+//#define ARDUINO_DUE_PROG
+
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -93,7 +96,10 @@
 //#define crosshair
 
 ///*************** DO NOT EDIT BELOW THIS LINE WITHOUT INTENT! ***************//
-
+// if any of the DUE options are enabled, enable the global DUE flag
+#if defined(ARDUINO_DUE_NATIVE) || defined(ARDUINO_DUE_PROG)
+  #define ARDUINO_DUE
+#endif
 ///////////////////////////////////////////////////////////////////////
 // Sub-Module Pinout configurations                                  //
 // (Advanced settings - Don't change unless you mean it              //
