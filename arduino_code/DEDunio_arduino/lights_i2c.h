@@ -14,7 +14,7 @@ void initLights() {
 #ifdef CautionPanel_on
   // Caution Panel via PCA9505 (Jshep CP)
   PCA9505_SetOutptMode(CpAddr);
-  PCA9505_SendOutputData(CpAddr,5,{0});
+  PCA9505_SendOutputData(CpAddr,5,{255});
 
 // using 2 MCP23017 for the CP will look like this
 //  MCP23017_SetOutptMode(Cpaddr1);

@@ -32,7 +32,7 @@ void PCA9505_SetOutptMode (byte addr) {
   Wire.beginTransmission(addr); // transmit to device
   Wire.write(0x98); // Set IO Direction from Bank0 with Auto increment
   for (uint8_t i=0; i < 5; i++){
-    Wire.write(0xff); // Set Bank to output  
+    Wire.write(0x00); // Set Bank to output  
   }
   Wire.endTransmission();
 }
