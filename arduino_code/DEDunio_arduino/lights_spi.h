@@ -44,11 +44,11 @@ void lightAOA() {
 
 #ifdef CautionPanel_on
 
-byte CautionPanel[4];
+byte CautionPanel[5];
 
 void readCautionPanel() {
   COM.print('C');
-  COM.readBytes(CautionPanel, 4);
+  COM.readBytes(CautionPanel, 5);
 }
 
 void lightCautionPanel() {

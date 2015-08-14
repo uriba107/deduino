@@ -31,7 +31,7 @@ void goDark() {
 #endif
 
 #ifdef CautionPanel_on
-  for (short i = 0; i < 4; i++ ) {
+  for (short i = 0; i < 5; i++ ) {
     CautionPanel[i] = 0;
   }
 #endif

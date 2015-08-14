@@ -14,14 +14,15 @@ void initLights() {
 #ifdef CautionPanel_on
   // Caution Panel via PCA9505 (Jshep CP)
   PCA9505_SetOutptMode(CpAddr);
-  PCA9505_SendOutputData(CpAddr,5,{255});
+  byte powerOn[5]={255,255,255,255,255};
+  PCA9505_SendOutputData(CpAddr,5,powerOn);
 
 // using 2 MCP23017 for the CP will look like this
 //  MCP23017_SetOutptMode(Cpaddr1);
 //  MCP23017_SetOutptMode(Cpaddr2);
 
-//  MCP23017_SendOutputData(CpAddr1, 0, 0);
-//  MCP23017_SendOutputData(CpAddr2, 0, 0);
+//  MCP23017_SendOutputData(CpAddr1, 255, 255);
+//  MCP23017_SendOutputData(CpAddr2, 255, 255);
 #endif //caution
 
 #ifdef Glareshield_on

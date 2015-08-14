@@ -4,14 +4,21 @@
 #include "Arduino.h"
 
 //////// Hardware functions ///////////
-///// PCF8574 /////
+
+///////////////////////////////////////////////////
+///// PCF8574 - I2C 8bit output expander      /////
+///// Can only sinks LEDs - no init needed    /////
+///////////////////////////////////////////////////
 void PCF8574_send (byte addr, byte data) {
   Wire.beginTransmission(addr); // transmit to device
   Wire.write(data);              // sends one byte
   Wire.endTransmission();
 }
 
-///// MCP23017 /////
+///////////////////////////////////////////////////
+///// MCP23017 - i2c 16bit I/O expander       /////
+///// source or sink LEDs - output by default /////
+///////////////////////////////////////////////////
 void MCP23017_SetOutptMode (byte addr) {
   Wire.beginTransmission(addr); // transmit to device
   Wire.write(0x00); // Set IODIR0
@@ -26,8 +33,10 @@ void MCP23017_SendOutputData (byte addr, byte data0, byte data1) {
   Wire.write(data1);  // Set IODIR1 to output
   Wire.endTransmission();
 }
-
-///// PCA9505 /////
+///////////////////////////////////////////////////
+///// PCA9505 - i2c 40bit I/O expander        /////
+///// source or sink LEDs - output by default /////
+///////////////////////////////////////////////////
 void PCA9505_SetOutptMode (byte addr) {
   Wire.beginTransmission(addr); // transmit to device
   Wire.write(0x98); // Set IO Direction from Bank0 with Auto increment
