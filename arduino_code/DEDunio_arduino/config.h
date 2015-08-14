@@ -62,9 +62,9 @@
 ////////// DED/PFL //////////
 //// DED and PFL use the same font to save memory, you have two possible fonts.
 //// "Wide" variant is more readable - Font my Alan "Cool Hand" Locatelli. (enabled by default) 
-//#define Widefont
+#define Widefont
 //// Another Variant based on Alan's Widefont. tweaked to be more lifelike
-#define MoonWidefont
+//#define MoonWidefont
 
 ////////// FFI //////////
 //*****************************************************************************************//
