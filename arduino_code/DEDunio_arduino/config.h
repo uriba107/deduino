@@ -49,7 +49,7 @@
 //  #define CautionPanel_on 
 
 // Available only on I2C
-//  #define Glareshield_on //Experimental not for use
+//  #define Glareshield_on 
 #endif
 
 
@@ -134,7 +134,8 @@
    #ifdef USE_I2C
        #define AoaAddr 0x20
        #define CpAddr  0x21
-       #define GsAddr  0x22
+//       #define CpAddr2  0x22
+       #define GsAddr  0x23
 
    #endif
 // Retained for Legacy support - i2c is preferable.

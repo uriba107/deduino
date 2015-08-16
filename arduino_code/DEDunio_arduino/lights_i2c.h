@@ -81,7 +81,7 @@ void readGlareShield() {
 }
 
 void lightGlareshield() {
-  MCP23017_SendOutputData(GsAddr, ~(GlareShield[1]), ~(GlareShield[0]));
+  MCP23017_SendOutputData(GsAddr, ~(GlareShield[0]), ~(GlareShield[1]));
 }
 #endif //Glareshield
 
