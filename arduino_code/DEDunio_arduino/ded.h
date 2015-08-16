@@ -7,8 +7,8 @@
   #define dedFont FalconDED_wide
   #define DED_CHAR_W 10
   #define DED_CHAR_H 12
-  #define DED_H_CONST 8
-  #define DED_V_CONST 2
+  #define DED_H_CONST 12
+  #define DED_V_CONST 1
 #else
   #define dedFont FalconDED_full
   #define DED_CHAR_W 9
