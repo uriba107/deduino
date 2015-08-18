@@ -32,9 +32,7 @@
 #ifdef Screens
   #define DED_on
   #define FuelFlow_on
-//  #define PFD_on 
-//  #define CMDS_on //Experimental not for use
-
+  #define PFD_on 
 #endif
 
 #ifdef Lights
@@ -148,3 +146,6 @@
 ////////// INTERNAL VARS //////////
 // How many seconds should go by before screens turn off after no response recived to the "I'm alive" signal
 #define SLEEP_TIMER 120
+
+// How many milliseconds go before the displays reset after initillizing (for user inspection)
+#define POST_BOOT_BIT 40000
