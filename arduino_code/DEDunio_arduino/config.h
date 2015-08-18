@@ -32,7 +32,7 @@
 #ifdef Screens
   #define DED_on
   #define FuelFlow_on
-  #define PFD_on 
+//  #define PFD_on 
 #endif
 
 #ifdef Lights
@@ -148,4 +148,4 @@
 #define SLEEP_TIMER 120
 
 // How many milliseconds go before the displays reset after initillizing (for user inspection)
-#define POST_BOOT_BIT 40000
+#define POST_BOOT_BIT 4000
