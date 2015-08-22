@@ -103,8 +103,14 @@
   #endif
   
   #ifdef CMDS_on
+    #include "falconded_full_u8g.h"
     #include "cmds.h"
-  #endif  
+  #endif
+    
+  #ifdef SpeedBreaks_on
+    #include "speedbreaks_img.h"
+    #include "speedbreaks.h"
+  #endif
 #endif
 
 // LightPanels general config
@@ -159,15 +165,25 @@ delay(2000); // to allow screens to boot on power on defore init.
 
 initSerial();
 
+// Initiallize displays - but be from small to large
 #ifdef FuelFlow_on
   initFF();
 #endif
+#ifdef SpeedBreaks_on
+  initSB();
+#endif
+
 #ifdef DED_on
   initDED();
 #endif
 #ifdef PFD_on
   initPFD();
 #endif
+
+#ifdef CMDS_on
+  initCMDS();
+#endif
+
 
 #ifdef Lights
   initLights();
@@ -224,6 +240,18 @@ void loop() {
       readCautionPanel();
       lightCautionPanel();
 #endif
+#ifdef CMDS_on
+      readCMDS();
+      drawCMDS();
+#endif
+      Run = 2;
+      break;
+    case 2:
+#ifdef SpeedBreaks_on
+      readSB();
+      drawSB();
+#endif
       Run = 0;
+      break;
   }
 }

@@ -22,7 +22,7 @@
 ///////////////////////////////////////////////////////////////////////
 
 #define Screens //global enable screens
-//#define Lights //global enable lights 
+#define Lights //global enable lights 
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -32,7 +32,9 @@
 #ifdef Screens
   #define DED_on
   #define FuelFlow_on
-//  #define PFD_on 
+  #define PFD_on 
+  #define CMDS_on 
+  #define SpeedBreaks_on
 #endif
 
 #ifdef Lights
@@ -44,10 +46,10 @@
 // Choose what to light up
 // Available to both protocols
   #define Indexers_on
-//  #define CautionPanel_on 
+  #define CautionPanel_on 
 
 // Available only on I2C
-//  #define Glareshield_on 
+  #define Glareshield_on 
 #endif
 
 
@@ -88,6 +90,15 @@
 //// Real FFI animation requires more RAM available there for is not suitable for an Uno if DED/PFL are enabled
 //// This feature will be automaticly disabled when using arduino Uno
 #define RealFFI
+
+////////// SpeedBreaks //////////
+//// Select the correct SB display driver
+//// SSD1306 dispaly drivers (such as the ones sold by Adafruit and sparkfun)
+#define SB_SSD1306
+
+//// SH1106 display drivers (commonly found on ebay)
+//#define SB_SH1106
+
 
 ////////// DEBUGGING //////////
 //// Enable crosshair to help align text on screens ////

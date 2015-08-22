@@ -25,6 +25,13 @@ void goDark() {
   }
 #endif
 
+#ifdef CMDS_on
+  for (short i = 0; i < 2; i++ ) {
+    for (short j = 0; j < 25; j++)
+      PFD[i][j] = 0;
+  }
+#endif
+
   // Indexers
 #ifdef Indexers_on
   AoaIndexer[0] = 0;
@@ -41,6 +48,12 @@ void goDark() {
     GlareShield[i] = 0;
   }
 #endif
+
+  // SpeedBreaks
+#ifdef SpeedBreaks_on
+  SpeedBreaks[0] = 5;
+#endif
+
 }
 #endif
 
