@@ -135,6 +135,17 @@
     #define EXT1_SEL 7
     #define EXT2_SEL 6
   #endif
+  
+  #ifdef ARDUINO_PRO_MICRO
+    #define DISP_A0 10
+    #define DED_SEL 9
+    #define FF_SEL 8
+    #define PFD_SEL 7
+    #define CMDS_SEL 6
+    #define EXT1_SEL 5
+    #define EXT2_SEL 4
+  #endif
+  
 #endif
 
 // Adjust i2c addresses to fit your rig.
