@@ -9,6 +9,7 @@
 
 //#define ARDUINO_UNO
 //#define ARDUINO_MICRO
+//#define ARDUINO_PRO_MICRO
 #define ARDUINO_DUE_NATIVE
 //#define ARDUINO_DUE_PROG
 
@@ -22,7 +23,7 @@
 ///////////////////////////////////////////////////////////////////////
 
 #define Screens //global enable screens
-#define Lights //global enable lights 
+//#define Lights //global enable lights 
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -32,9 +33,9 @@
 #ifdef Screens
   #define DED_on
   #define FuelFlow_on
-  #define PFD_on 
-  #define CMDS_on 
-  #define SpeedBreaks_on
+//  #define PFD_on 
+//  #define CMDS_on 
+//  #define SpeedBreaks_on
 #endif
 
 #ifdef Lights

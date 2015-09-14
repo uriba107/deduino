@@ -1,8 +1,8 @@
 //**********************************************************************//
 //  Name    : DEDuino, Arduino displays for FalconBMS                   //
 //  Author  : Uri Ben-Avraham                                           //
-//  Date    : 21 Aug, 2015                                              //
-//  Version : 1.2.1                                                     //
+//  Date    : 14 Sep, 2015                                              //
+//  Version : 1.2.2                                                     //
 //  License : MIT                                                       //
 //  Notes   : Uncomment the DEFINE for the Arduino board in use         //
 //          : Boards supported by this version:                         //
@@ -84,6 +84,11 @@
     #include "fuelflow.h"
   #endif
 
+  #ifdef SpeedBreaks_on
+    #include "speedbreaks_img.h"
+    #include "speedbreaks.h"
+  #endif
+  
   #if defined DED_on || defined PFD_on
     #ifdef Widefont
       #include "falconded_wide_u8g.h"
@@ -105,11 +110,6 @@
   #ifdef CMDS_on
     #include "falconded_full_u8g.h"
     #include "cmds.h"
-  #endif
-    
-  #ifdef SpeedBreaks_on
-    #include "speedbreaks_img.h"
-    #include "speedbreaks.h"
   #endif
 #endif
 
