@@ -1,6 +1,6 @@
 # DEDUino
 Arduino Based DED for Falcon BMS.
-Project Blog: http://pits.108vfs.org
+Project Blog: http://pit.uriba.org
 
 ## Requirements:
 ### Hardware:
@@ -33,7 +33,7 @@ Project Blog: http://pits.108vfs.org
 ### Initial setup:
 1. Download and install the Arduino IDE (if not already installed)
 2. Download the Arduino code
-3. In the Arduino IDE - "Add library" choose "U8glib_DEDuino" it's standard U8glib 1.18.1 with 16BIT support enabled (required for the large displays)
+3. In the Arduino IDE - "Add library" choose "U8g2_16bit" it's standard U8g2 2.12.6 with 16BIT support enabled (required for the large displays)
 4. In "config.h" and uncomment the correct define for your arduino version (Uno, Micro or Due).
 5. In "config.h" Uncomment the define statements for the periferials you want to use. please note that adding both DED and PFL may have an impact on performace.
 6. Wire prereferials according the the pinout in the code. Please pay attention to the SCK and MOSI pins and the latchpins
@@ -72,3 +72,4 @@ In the "enclosure" folders you'll find some stractual stuff, like the foamboard 
 
 ## Notes and remarks
 While the project is OpenSource. Currently I'm holding back the source code for the PC connector application. That is done because The code is a mess, I need to properly document it before I release it. Hopfully sometime this year. Nothing secret about it, promise :)
+Big Thanks to Oliver Kraus (olikraus) who wrote [u8glib](https://github.com/olikraus/u8glib)/[u8g2](https://github.com/olikraus/u8g2) without him, none of this would have been possible. 
