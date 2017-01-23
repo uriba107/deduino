@@ -1,9 +1,19 @@
 // Declare screen Object
-U8GLIB_NHD31OLED_2X_BW pfdDisp(PFD_SEL, DISP_A0); //PFD screen SSD1322 based 240*64 (Buydisplay/rising star)
-
+#ifdef ARDUINO_DUE
+  #ifndef rotatePFD
+    U8G2_SSD1322_NHD_256X64_F_4W_HW_SPI pfdDisp(U8G2_R2,PFD_SEL, DISP_A0); //DED screen SSD1322 based 256*64 (Buydisplay/rising star)
+  #else
+    U8G2_SSD1322_NHD_256X64_F_4W_HW_SPI pfdDisp(U8G2_R0,PFD_SEL, DISP_A0); //DED screen SSD1322 based 256*64 (Buydisplay/rising star)
+  #endif
+#else
+  #ifndef rotatePFD
+    U8G2_SSD1322_NHD_256X64_1_4W_HW_SPI pfdDisp(U8G2_R2,PFD_SEL, DISP_A0); //DED screen SSD1322 based 256*64 (Buydisplay/rising star)
+  #else
+    U8G2_SSD1322_NHD_256X64_1_4W_HW_SPI pfdDisp(U8G2_R0,PFD_SEL, DISP_A0); //DED screen SSD1322 based 256*64 (Buydisplay/rising star)
+  #endif
+#endif
 
 // Font settings
-#if defined(Widefont) || defined(MoonWidefont)
   #define pfdFont FalconDED_wide
   #define PFD_CHAR_W 10
   #define PFD_CHAR_H 12
@@ -12,16 +22,6 @@ U8GLIB_NHD31OLED_2X_BW pfdDisp(PFD_SEL, DISP_A0); //PFD screen SSD1322 based 240
 // Height: (64-(12*5))/2=2
   #define PFD_H_CONST 8
   #define PFD_V_CONST 2
-#else
-  #define pfdFont FalconDED_full
-  #define PFD_CHAR_W 9
-  #define PFD_CHAR_H 12
-// Font offset calc
-// width: Screen is 256px wide. font is 9px wide. DED has 24 chars. 24*9=216 (Total text width). 256-216=40 diff. 40/2 = 20 offset in px to center text in screen
-// Height: (64-(12*5))/2=2
-  #define PFD_H_CONST 20
-  #define PFD_V_CONST 2
-#endif
 
 
 // Global Variable required
@@ -33,13 +33,15 @@ char PFD[5][25] =  {{ 0 }};
 
 void initPFD() {
   pfdDisp.begin();
-  pfdDisp.disableCursor(); //disable cursor, enable cursore use: enableCursor();
+//#ifdef rotatePFD
+//  pfdDisp.setRot180();
+//#endif
+//  pfdDisp.disableCursor(); //disable cursor, enable cursore use: enableCursor();
   pfdDisp.setFont(pfdFont);
   pfdDisp.setFontPosTop();
-    pfdDisp.firstPage();
+  pfdDisp.firstPage();
   do {
     pfdDisp.drawStr(PFD_H_CONST, 2 * PFD_CHAR_H + PFD_V_CONST, "PFD - READY!");
-
 // Below crosshair is for alignment purposes. Defined at config.h   
     #ifdef crosshair
       pfdDisp.drawFrame(0,0,256,64);

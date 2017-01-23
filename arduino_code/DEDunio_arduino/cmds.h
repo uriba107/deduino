@@ -1,15 +1,11 @@
 // Declare screen Object
-U8GLIB_NHD31OLED_2X_BW cmdsDisp(CMDS_SEL, DISP_A0); //CMDS screen SSD1322 based 240*64 (Buydisplay/rising star)
-
+#ifdef ARDUINO_DUE
+    U8G2_SSD1322_NHD_256X64_F_4W_HW_SPI cmdsDisp(U8G2_R2,CMDS_SEL, DISP_A0); //DED screen SSD1322 based 256*64 (Buydisplay/rising star)
+#else
+    U8G2_SSD1322_NHD_256X64_1_4W_HW_SPI cmdsDisp(U8G2_R2,CMDS_SEL, DISP_A0); //DED screen SSD1322 based 256*64 (Buydisplay/rising star)
+#endif
 // Font settings
-//#define cmdsFont u8g_font_unifontr
-////#define cmdsFont u8g_font_ncenR18
-//#define CMDS_CHAR_W 14
-//#define CMDS_CHAR_H 35
-//#define CMDS_H_CONST 0
-//#define CMDS_V_CONST 0
-
-  #define cmdsFont FalconDED_full
+  #define cmdsFont FalconDED_wide
   #define CMDS_CHAR_W 9
   #define CMDS_CHAR_H 35
 // Font offset calc
@@ -29,7 +25,7 @@ void initCMDS() {
 //  pinMode(CMDS_SEL, OUTPUT);
 
   cmdsDisp.begin();
-  cmdsDisp.disableCursor(); //disable cursor, enable cursore use: enableCursor();
+//  cmdsDisp.disableCursor(); //disable cursor, enable cursore use: enableCursor();
   cmdsDisp.setFont(cmdsFont);
   cmdsDisp.setFontPosTop();
   cmdsDisp.firstPage();

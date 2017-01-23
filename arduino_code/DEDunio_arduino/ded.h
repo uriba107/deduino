@@ -1,24 +1,28 @@
 
 // Declare screen Object
-  U8GLIB_NHD31OLED_2X_BW dedDisp(DED_SEL, DISP_A0); //DED screen SSD1322 based 240*64 (Buydisplay/rising star)
+#ifdef ARDUINO_DUE
+  #ifndef rotateDED
+    U8G2_SSD1322_NHD_256X64_F_4W_HW_SPI dedDisp(U8G2_R2,DED_SEL, DISP_A0); //DED screen SSD1322 based 256*64 (Buydisplay/rising star)
+  #else
+    U8G2_SSD1322_NHD_256X64_F_4W_HW_SPI dedDisp(U8G2_R0,DED_SEL, DISP_A0); //DED screen SSD1322 based 256*64 (Buydisplay/rising star)
+  #endif
+#else
+  #ifndef rotateDED
+    U8G2_SSD1322_NHD_256X64_1_4W_HW_SPI dedDisp(U8G2_R2,DED_SEL, DISP_A0); //DED screen SSD1322 based 256*64 (Buydisplay/rising star)
+  #else
+    U8G2_SSD1322_NHD_256X64_1_4W_HW_SPI dedDisp(U8G2_R0,DED_SEL, DISP_A0); //DED screen SSD1322 based 256*64 (Buydisplay/rising star)
+  #endif
+#endif
 
 // Font settings
-#if defined(Widefont) || defined(MoonWidefont)
+// Font offset calc
+// width: Screen is 256px wide. font is 9px wide. DED has 24 chars. 24*9=216 (Total text width). 256-216=40 diff. 40/2 = 20 offset in px to center text in screen
+// Height: (64-(12*5))/2=2
   #define dedFont FalconDED_wide
   #define DED_CHAR_W 10
   #define DED_CHAR_H 12
   #define DED_H_CONST 12
   #define DED_V_CONST 1
-#else
-  #define dedFont FalconDED_full
-  #define DED_CHAR_W 9
-  #define DED_CHAR_H 12
-// Font offset calc
-// width: Screen is 256px wide. font is 9px wide. DED has 24 chars. 24*9=216 (Total text width). 256-216=40 diff. 40/2 = 20 offset in px to center text in screen
-// Height: (64-(12*5))/2=2
-  #define DED_H_CONST 20
-  #define DED_V_CONST 2
-#endif
 
 // Global Variable required
 char DED[5][25] = {{ 0 }};
@@ -31,7 +35,8 @@ char DED[5][25] = {{ 0 }};
 void initDED() {
   //  pinMode(DED_SEL, OUTPUT);
   dedDisp.begin();
-  dedDisp.disableCursor(); //disable cursor, enable cursore use: enableCursor();
+
+//  dedDisp.disableCursor(); //disable cursor, enable cursore use: enableCursor();
   dedDisp.setFont(dedFont);
   dedDisp.setFontPosTop();
   dedDisp.firstPage();

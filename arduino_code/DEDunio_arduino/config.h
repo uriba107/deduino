@@ -10,8 +10,8 @@
 //#define ARDUINO_UNO
 //#define ARDUINO_MICRO
 //#define ARDUINO_PRO_MICRO
-#define ARDUINO_DUE_NATIVE
-//#define ARDUINO_DUE_PROG
+//#define ARDUINO_DUE_NATIVE
+#define ARDUINO_DUE_PROG
 
 
 
@@ -23,7 +23,7 @@
 ///////////////////////////////////////////////////////////////////////
 
 #define Screens //global enable screens
-//#define Lights //global enable lights 
+#define Lights //global enable lights 
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -47,10 +47,10 @@
 // Choose what to light up
 // Available to both protocols
   #define Indexers_on
-  #define CautionPanel_on 
+//  #define CautionPanel_on 
 
 // Available only on I2C
-  #define Glareshield_on 
+//  #define Glareshield_on 
 #endif
 
 
@@ -61,11 +61,9 @@
 
 
 ////////// DED/PFL //////////
-//// DED and PFL use the same font to save memory, you have two possible fonts.
-//// "Wide" variant is more readable - Font my Alan "Cool Hand" Locatelli. (enabled by default) 
-//#define Widefont
-//// Another Variant based on Alan's Widefont. tweaked to be more lifelike
-#define MoonWidefont
+// uncomment to rotate display 180Degrees
+//#define rotateDED
+//#define rotatePFD
 
 ////////// FFI //////////
 //*****************************************************************************************//
@@ -168,7 +166,7 @@
 
 ////////// INTERNAL VARS //////////
 // How many seconds should go by before screens turn off after no response recived to the "I'm alive" signal
-#define SLEEP_TIMER 120
+#define SLEEP_TIMER 120000 // 120 seconds In Miliseconds
 
 // How many milliseconds go before the displays reset after initillizing (for user inspection)
 #define POST_BOOT_BIT 4000

@@ -1,11 +1,18 @@
 // Declare screen Object
-#ifdef SB_SSD1306
-U8GLIB_SSD1306_128X64_2X sbDisp(EXT1_SEL, DISP_A0); // SSD1306 based FFI screen (adafruit/Ebay)
+#ifdef FFI_SSD1306 // SSD1306 based FFI screen (adafruit/Ebay)
+  #ifdef ARDUINO_DUE
+    U8G2_SSD1306_128X64_NONAME_F_4W_HW_SPI sbDisp(U8G2_R0,EXT1_SEL, DISP_A0);
+  #else
+    U8G2_SSD1306_128X64_NONAME_2_4W_HW_SPI sbDisp(U8G2_R0,EXT1_SEL, DISP_A0);
+  #endif
 #endif
-#ifdef SB_SH1106
-U8GLIB_SH1106_128X64_2X sbDisp(EXT1_SEL, DISP_A0); // SH1106 based FFI screen (ebay) - thanks "MrWell"!
+#ifdef FFI_SH1106 // SH1106 based FFI screen (ebay) - thanks "MrWell"!
+  #ifdef ARDUINO_DUE
+    U8G2_SH1106_128X64_NONAME_F_4W_HW_SPI sbDisp(U8G2_R0,EXT1_SEL, DISP_A0);
+  #else
+    U8G2_SH1106_128X64_NONAME_2_4W_HW_SPI sbDisp(U8G2_R0,EXT1_SEL, DISP_A0);
+  #endif
 #endif
-
 // Change these display sizes if needed
 #define SB_SCREEN_W 128
 #define SB_SCREEN_H 64
@@ -26,7 +33,7 @@ char SpeedBreaks[2] = {3};
 
 void initSB() {
   sbDisp.begin();
-  sbDisp.disableCursor(); //disable cursor, enable cursore use: enableCursor();
+//  sbDisp.disableCursor(); //disable cursor, enable cursore use: enableCursor();
   /// Begin Picture loop ///
   sbDisp.firstPage();
   do {
